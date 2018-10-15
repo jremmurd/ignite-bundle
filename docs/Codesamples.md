@@ -80,6 +80,10 @@
 ```
 
 ## Client Side
+For details concerning the client side javascript have a look at the [pusher client api guide](https://pusher.com/docs/client_api_guide).
+If you use `$myChannel->subscribe()` on the server-side as described the initialization and subscriptions take place automatically.
+
+
 ##### index.html.php
 ```php
 <script>

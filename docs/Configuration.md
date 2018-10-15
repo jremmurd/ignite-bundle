@@ -1,5 +1,5 @@
 # Configuration
-For details please refere to the comments in the provided `config.yml` file.
+For details please refere to the comments in the provided `config.yml` example.
 
 ##### config.yml
 ```yaml
