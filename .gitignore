@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+*.log
+
+# composer
+composer.lock
+
+# PhpStorm / IDEA
+.idea
+.idea_modules
+
+# NetBeans
+nbproject

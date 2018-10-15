@@ -1,0 +1,38 @@
+{
+  "name": "juup/ignite-bundle",
+  "license": "GPL-3.0-or-later",
+  "type": "pimcore-bundle",
+  "config": {
+    "sort-packages": true
+  },
+  "keywords": [
+    "pimcore",
+    "bundle",
+    "realtime",
+    "notifications"
+  ],
+  "authors": [
+    {
+      "name": "Julian Raab",
+      "email": "julian@raab.media",
+      "homepage": "www.raab.media"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "pimcore/core-version": "^5.1.0",
+    "pusher/pusher-php-server": "^3.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Juup\\": "src/"
+    }
+  },
+  "extra": {
+    "pimcore": {
+      "bundles": [
+        "\\Juup\\IgniteBundle\\JuupIgniteBundle"
+      ]
+    }
+  }
+}

@@ -1,0 +1,113 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    Juup\IgniteBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Juup\IgniteBundle\Tools\Installer:
+      public: true
+
+#--------------------------------------------------------
+#                   Channel Encoder
+#--------------------------------------------------------
+    ignite.channel.encoder:
+        class: Juup\IgniteBundle\Ignite\Channel\Encoder\DefaultChannelSignatureEncoder
+
+    Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelNameEncoderInterface: '@ignite.channel.encoder'
+
+#--------------------------------------------------------
+#                   Config
+#--------------------------------------------------------
+    ignite.config:
+        class: Juup\IgniteBundle\Ignite\Config
+        arguments:
+            $config: '%ignite.config%'
+        lazy: true
+        public: true
+
+#--------------------------------------------------------
+#                   Drivers
+#--------------------------------------------------------
+    ignite.driver.service_locator:
+      class: Symfony\Component\DependencyInjection\ServiceLocator
+      tags: ['container.service_locator']
+      arguments:
+        -
+          Juup\IgniteBundle\Ignite\Driver\Pusher: '@ignite.driver.pusher'
+          Juup\IgniteBundle\Ignite\Driver\Logger: '@ignite.driver.logger'
+          Juup\IgniteBundle\Ignite\Driver\Notification: '@ignite.driver.notification'
+
+    Juup\IgniteBundle\Ignite\Driver\Pusher:
+    ignite.driver.pusher:
+      alias: Juup\IgniteBundle\Ignite\Driver\Pusher
+      public: true
+
+    Juup\IgniteBundle\Ignite\Driver\Logger:
+    ignite.driver.logger:
+      alias: Juup\IgniteBundle\Ignite\Driver\Logger
+      public: true
+
+    Juup\IgniteBundle\Ignite\Driver\Notification:
+    ignite.driver.notification:
+      alias: Juup\IgniteBundle\Ignite\Driver\Notification
+      public: true
+
+#--------------------------------------------------------
+#                   Radio
+#--------------------------------------------------------
+    ignite.radio:
+      class: Juup\IgniteBundle\Ignite\Radio
+      arguments:
+        - '@ignite.channel.encoder'
+        - '@ignite.channel_factory'
+        - '@ignite.config'
+        - '@ignite.driver.service_locator'
+
+#--------------------------------------------------------
+#                   Channels
+#--------------------------------------------------------
+    ignite.channel_factory:
+        class: Juup\IgniteBundle\Ignite\Channel\ChannelFactory
+        arguments:
+          - '@ignite.config'
+          - '@ignite.channel.encoder'
+          - '@ignite.driver.service_locator'
+
+#--------------------------------------------------------
+#                   Authenticators
+#--------------------------------------------------------
+    ignite.authenticator.user:
+      class: Juup\IgniteBundle\Ignite\Authenticator\User
+      public: true
+
+    ignite.authenticator.pimcore:
+      class: Juup\IgniteBundle\Ignite\Authenticator\Admin\Pimcore
+      public: true
+
+#--------------------------------------------------------
+#                   Templating Helpers
+#--------------------------------------------------------
+    ignite.templating.ignite:
+      class: Juup\IgniteBundle\Templating\Helper\Ignite
+      tags:
+        - { name: templating.helper, alias: ignite }
+
+#--------------------------------------------------------
+#                   Event Listeners
+#--------------------------------------------------------
+    ignite.listener.setup:
+      class: Juup\IgniteBundle\EventListener\SetupListener
+      tags:
+        - { name: kernel.event_listener, event: kernel.controller }

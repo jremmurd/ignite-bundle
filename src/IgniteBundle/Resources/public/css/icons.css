@@ -1,0 +1,41 @@
+.ignitebundle_icon_users:after {
+    right: 1px;
+    bottom: -5px;
+    position: absolute;
+    content: attr(data-ignite-online-count);
+    color: #ddd;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    padding: 0 5px;
+    font-size: .85em;
+    background: #191919;
+}
+
+.ignitebundle_icon_users  {
+    cursor: pointer;
+    background: url(/pimcore/static6/img/flat-color-icons/manager.svg) center center no-repeat !important;
+}
+
+.ignite-notification-window>.x-window-header-default .x-tool-img {
+    background-color: inherit;
+}
+
+.ignite-notification-window>.x-window-header {
+    background-color: #191919;
+    border-top: none;
+    border-width: 0!important;
+}
+.ignite-notification-window {
+    border: transparent;
+    border-top: none;
+    box-shadow:rgb(200, 200, 200) -1px 3px 2px;
+}
+.multiline-row>td>.x-grid-cell-inner {
+    overflow: auto !important;
+    white-space: normal !important;
+    text-overflow: ellipsis;
+    display: block;
+}
+.ignite-notification-window .x-title-text {
+    cursor: default;
+}

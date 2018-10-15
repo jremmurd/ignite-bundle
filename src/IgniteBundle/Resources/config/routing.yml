@@ -1,0 +1,3 @@
+ignite_homepage:
+    path:     /
+    defaults: { _controller: IgniteBundle:Default:index }

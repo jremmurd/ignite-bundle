@@ -1,0 +1,5 @@
+ignite:
+    resource: "@IgniteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
