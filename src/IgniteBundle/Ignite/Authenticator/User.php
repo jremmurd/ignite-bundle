@@ -34,7 +34,7 @@ class User implements AuthenticatorInterface
     public function __construct(TokenStorage $tokenStorage, ChannelSignatureEncoderInterface $channelNameEncoder)
     {
         $this->user = $tokenStorage->getToken()->getUser();
-        $this->channelFactory = $channelNameEncoder;
+        $this->channelNameEncoder = $channelNameEncoder;
     }
 
     /**
@@ -47,11 +47,7 @@ class User implements AuthenticatorInterface
         $channelName = $request->get(Constant::POST_PARAM_CHANNEL_NAME);
         $parameters = $this->channelNameEncoder->decode($channelName)["parameters"];
 
-        if ($this->getUser()->getId() == $parameters["id"]) {
-            return true;
-        }
-
-        return false;
+        return $this->getUser()->getId() == $parameters["id"];
     }
 
     /**
@@ -61,6 +57,4 @@ class User implements AuthenticatorInterface
     {
         return $this->user;
     }
-
-
 }

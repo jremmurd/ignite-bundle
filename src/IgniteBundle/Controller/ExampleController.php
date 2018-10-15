@@ -36,9 +36,11 @@ class ExampleController extends FrontendController
      */
     public function indexAction(Request $request, Radio $radio)
     {
-        $radio
-            ->getChannel("user", ["id" => $this->getUser()->getId()])
-            ->subscribe();
+        if ($user = $this->getUser()) {
+            $radio
+                ->getChannel("user", ["id" => $user ->getId()])
+                ->subscribe();
+        }
 
         $radio
             ->getChannel("global")
@@ -71,9 +73,9 @@ class ExampleController extends FrontendController
         $child_1 = $radio->getPublicChannel("global.child_1");
         $child_2 = $radio->getPublicChannel("global.child_2");
 
-        $globalChannel->publish(new Message("Hello World!"));
-        $child_1->publish(new Message("Hello Child Channel 1!"));
-        $child_2->publish(new Message("Hello Child Channel 2!"));
+        $globalChannel->publish(new Message("Hello from Global!"));
+        $child_1->publish(new Message("Hello from Global Child 1!"));
+        $child_2->publish(new Message("Hello from Global Child 2!"));
 
         return new Response("Done.");
     }
@@ -89,7 +91,7 @@ class ExampleController extends FrontendController
     public function publishToPresenceChannel(Request $request, Radio $radio)
     {
         $channel = $radio->getPresenceChannel("user", ["id" => $this->getUser()->getId()]);
-        $channel->publish(new Message("hello"));
+        $channel->publish(new Message("Hello from User!"));
 
         return new Response("Done.");
     }
@@ -105,12 +107,15 @@ class ExampleController extends FrontendController
     public function publishToNotificationChannel(Request $request, Radio $radio)
     {
         $radio->setChannelNamespace("admin");
-        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 2]);
+        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 99999999]);
 
         $notifiedChannel
-            ->publish(new Notification("Some Event", "Hello World!", NotificationType::INFO ))
-            ->publish(new Notification("Some Title", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO ,  [
-                    "related_object" => ["type" => Notification::DATA_TYPE_OBJECT, "data" => 2]
+            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!", NotificationType::WARNING ))
+            ->publish(new Notification("Hello Notification with data", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO ,  [
+                    "related_object" => [
+                        "type" => Notification::DATA_TYPE_OBJECT,
+                        "data" => 1
+                    ]
                 ])
             );
 

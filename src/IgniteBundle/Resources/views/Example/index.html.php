@@ -25,7 +25,7 @@ $script = (string)$this->ignite();
         p_r(Pimcore::getContainer()->getParameter("ignite.config"));
         ?>
 
-        <h5>Generated Script</h5>
+        <h5 class="mt-3">Generated Script</h5>
         <pre>
         <?= ($script) ?>
         </pre>
@@ -37,12 +37,18 @@ $script = (string)$this->ignite();
         <h4 class="mt-4">Global Channel</h4>
         <div class="channel channel-global list-group">
         </div>
+        <hr>
 
         <h4 class="mt-4">User Channel</h4>
         <div class="channel channel-user list-group">
         </div>
 
-        <h1>Notifications</h1>
+    </div>
+    <div class="card  m-3 p-4">
+
+        <h1>Notifications
+            <small>(not realtime)</small>
+        </h1>
         <table>
             <thead>
             <tr>
@@ -63,7 +69,7 @@ $script = (string)$this->ignite();
                     <td><?= $notification->getTitle() ?></td>
                     <td><?= $notification->getMessage() ?></td>
                     <td><?= $notification->isRead() ? "read" : "unread" ?></td>
-                    <td><?= p_r($notification->getData())?> </td>
+                    <td><?= json_encode($notification->getData(), JSON_PRETTY_PRINT) ?> </td>
                 </tr>
             <?php endforeach ?>
             </tbody>

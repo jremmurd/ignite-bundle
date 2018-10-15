@@ -33,6 +33,13 @@ Ignite your customer's user experience by adding web realtime functionalities to
 - [Configuration](./docs/Configuration.md)
 - [Code Samples](./docs/Codesamples.md)
 
+Visit `http://your-domain.com/ignite` to see your current configuration and test your realtime capabilities. While watching your `/ignite` route then call:
+- `http://you-domain.com/ignite/publish/public`
+- `http://you-domain.com/ignite/publish/presence`
+- `http://you-domain.com/ignite/publish/notification`
+
+You should see the messages beeing added to the html automatically as you call the `/publish/...` routes.
+
 ## Impression
 
 In the upper right corner there is the notification widget, which can be enabled via a user permission. 
