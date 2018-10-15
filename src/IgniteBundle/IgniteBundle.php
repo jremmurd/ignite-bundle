@@ -21,18 +21,13 @@ class IgniteBundle extends AbstractPimcoreBundle
     public function getCssPaths()
     {
         return [
-            '/bundles/ignite/css/icons.css',
+            '/bundles/ignite/css/style.css',
         ];
     }
 
     public function getInstaller()
     {
         return $this->container->get(Installer::class);
-    }
-
-    public function getVersion()
-    {
-        return 0.2;
     }
 
     public function getNiceName()

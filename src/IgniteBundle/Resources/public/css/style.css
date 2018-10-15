@@ -1,3 +1,16 @@
+/**
+ *  Ignite stylesheet
+ */
+
+/* Icons start */
+.ignitebundle_icon_users  {
+    cursor: pointer;
+    background: url(/pimcore/static6/img/flat-color-icons/manager.svg) center center no-repeat !important;
+}
+/* Icons end */
+
+
+/* user presence start */
 .ignitebundle_icon_users:after {
     right: 1px;
     bottom: -5px;
@@ -10,12 +23,9 @@
     font-size: .85em;
     background: #191919;
 }
+/* user presence end */
 
-.ignitebundle_icon_users  {
-    cursor: pointer;
-    background: url(/pimcore/static6/img/flat-color-icons/manager.svg) center center no-repeat !important;
-}
-
+/* notifications start*/
 .ignite-notification-window>.x-window-header-default .x-tool-img {
     background-color: inherit;
 }
@@ -39,3 +49,4 @@
 .ignite-notification-window .x-title-text {
     cursor: default;
 }
+/* notifications end */
