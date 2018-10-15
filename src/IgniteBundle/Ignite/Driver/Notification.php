@@ -6,17 +6,17 @@
  * Time: 14:57
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Channel\EventInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
 use Pimcore\Log\ApplicationLogger;
 use Symfony\Component\HttpFoundation\Request;
 
 class Notification extends AbstractDriver
 {
-    /* @var \Juup\IgniteBundle\Model\Notification[] $notifications */
+    /* @var \JRemmurd\IgniteBundle\Model\Notification[] $notifications */
     protected $notifications = [];
 
     protected $channelSignatureEncoder;
@@ -43,22 +43,22 @@ class Notification extends AbstractDriver
      * @param $channels
      * @param EventInterface $event
      * @param null $socketId
-     * @return \Juup\IgniteBundle\Model\Notification
+     * @return \JRemmurd\IgniteBundle\Model\Notification
      */
     public function push($channels, EventInterface $event, $socketId = null)
     {
-        $notification = \Juup\IgniteBundle\Model\Notification::createFromEvent($event);
+        $notification = \JRemmurd\IgniteBundle\Model\Notification::createFromEvent($event);
         $this->notifications[] = $notification;
 
         if (method_exists($event, "setNotification")) {
-            /* @var \Juup\IgniteBundle\Ignite\Event\Notification $event */
+            /* @var \JRemmurd\IgniteBundle\Ignite\Event\Notification $event */
             $event->setNotification($notification);
         }
 
         if (method_exists($event, "setTargetUser")) {
 
             if (!$event->getTargetUser()) {
-                /* @var \Juup\IgniteBundle\Ignite\Event\Notification $event */
+                /* @var \JRemmurd\IgniteBundle\Ignite\Event\Notification $event */
                 $channels = is_array($channels) ? $channels : [$channels];
                 foreach ($channels as $channel) {
                     $decoded = $this->channelSignatureEncoder->decode($channel);

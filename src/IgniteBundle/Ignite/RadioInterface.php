@@ -6,10 +6,10 @@
  * Time: 14:07
  */
 
-namespace Juup\IgniteBundle\Ignite;
+namespace JRemmurd\IgniteBundle\Ignite;
 
 
-use Juup\IgniteBundle\Ignite\Channel\ChannelInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\ChannelInterface;
 
 interface RadioInterface
 {

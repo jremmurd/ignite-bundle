@@ -6,7 +6,7 @@
  * Time: 20:26
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 
 abstract class AbstractDriver implements DriverInterface

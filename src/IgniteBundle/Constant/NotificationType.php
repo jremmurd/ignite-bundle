@@ -6,7 +6,7 @@
  * Time: 14:41
  */
 
-namespace Juup\IgniteBundle\Constant;
+namespace JRemmurd\IgniteBundle\Constant;
 
 
 class NotificationType extends AbstractConstant

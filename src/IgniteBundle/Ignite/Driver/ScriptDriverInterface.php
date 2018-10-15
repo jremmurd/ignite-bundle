@@ -6,7 +6,7 @@
  * Time: 20:41
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 
 interface ScriptDriverInterface extends DriverInterface

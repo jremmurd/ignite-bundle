@@ -6,7 +6,7 @@
  * Time: 19:23
  */
 
-namespace Juup\IgniteBundle\Constant;
+namespace JRemmurd\IgniteBundle\Constant;
 
 
 class Permission extends AbstractConstant

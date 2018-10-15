@@ -6,15 +6,15 @@
  * Time: 19:03
  */
 
-namespace Juup\IgniteBundle\Controller\Admin;
+namespace JRemmurd\IgniteBundle\Controller\Admin;
 
 
-use Juup\IgniteBundle\Ignite\Authenticator\AuthenticatorInterface;
-use Juup\IgniteBundle\Ignite\Channel\AbstractAuthChannel;
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Config;
-use Juup\IgniteBundle\Ignite\Constant;
-use Juup\IgniteBundle\Ignite\Radio;
+use JRemmurd\IgniteBundle\Ignite\Authenticator\AuthenticatorInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\AbstractAuthChannel;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Config;
+use JRemmurd\IgniteBundle\Ignite\Constant;
+use JRemmurd\IgniteBundle\Ignite\Radio;
 use Pimcore\Controller\FrontendController;
 use Pimcore\Tool;
 use Symfony\Component\HttpFoundation\Request;

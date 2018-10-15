@@ -11,27 +11,27 @@ services:
 
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
-    Juup\IgniteBundle\Controller\:
+    JRemmurd\IgniteBundle\Controller\:
         resource: '../../Controller'
         public: true
         tags: ['controller.service_arguments']
 
-    Juup\IgniteBundle\Tools\Installer:
+    JRemmurd\IgniteBundle\Tools\Installer:
       public: true
 
 #--------------------------------------------------------
 #                   Channel Encoder
 #--------------------------------------------------------
     ignite.channel.encoder:
-        class: Juup\IgniteBundle\Ignite\Channel\Encoder\DefaultChannelSignatureEncoder
+        class: JRemmurd\IgniteBundle\Ignite\Channel\Encoder\DefaultChannelSignatureEncoder
 
-    Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelNameEncoderInterface: '@ignite.channel.encoder'
+    JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelNameEncoderInterface: '@ignite.channel.encoder'
 
 #--------------------------------------------------------
 #                   Config
 #--------------------------------------------------------
     ignite.config:
-        class: Juup\IgniteBundle\Ignite\Config
+        class: JRemmurd\IgniteBundle\Ignite\Config
         arguments:
             $config: '%ignite.config%'
         lazy: true
@@ -45,30 +45,30 @@ services:
       tags: ['container.service_locator']
       arguments:
         -
-          Juup\IgniteBundle\Ignite\Driver\Pusher: '@ignite.driver.pusher'
-          Juup\IgniteBundle\Ignite\Driver\Logger: '@ignite.driver.logger'
-          Juup\IgniteBundle\Ignite\Driver\Notification: '@ignite.driver.notification'
+          JRemmurd\IgniteBundle\Ignite\Driver\Pusher: '@ignite.driver.pusher'
+          JRemmurd\IgniteBundle\Ignite\Driver\Logger: '@ignite.driver.logger'
+          JRemmurd\IgniteBundle\Ignite\Driver\Notification: '@ignite.driver.notification'
 
-    Juup\IgniteBundle\Ignite\Driver\Pusher:
+    JRemmurd\IgniteBundle\Ignite\Driver\Pusher:
     ignite.driver.pusher:
-      alias: Juup\IgniteBundle\Ignite\Driver\Pusher
+      alias: JRemmurd\IgniteBundle\Ignite\Driver\Pusher
       public: true
 
-    Juup\IgniteBundle\Ignite\Driver\Logger:
+    JRemmurd\IgniteBundle\Ignite\Driver\Logger:
     ignite.driver.logger:
-      alias: Juup\IgniteBundle\Ignite\Driver\Logger
+      alias: JRemmurd\IgniteBundle\Ignite\Driver\Logger
       public: true
 
-    Juup\IgniteBundle\Ignite\Driver\Notification:
+    JRemmurd\IgniteBundle\Ignite\Driver\Notification:
     ignite.driver.notification:
-      alias: Juup\IgniteBundle\Ignite\Driver\Notification
+      alias: JRemmurd\IgniteBundle\Ignite\Driver\Notification
       public: true
 
 #--------------------------------------------------------
 #                   Radio
 #--------------------------------------------------------
     ignite.radio:
-      class: Juup\IgniteBundle\Ignite\Radio
+      class: JRemmurd\IgniteBundle\Ignite\Radio
       arguments:
         - '@ignite.channel.encoder'
         - '@ignite.channel_factory'
@@ -79,7 +79,7 @@ services:
 #                   Channels
 #--------------------------------------------------------
     ignite.channel_factory:
-        class: Juup\IgniteBundle\Ignite\Channel\ChannelFactory
+        class: JRemmurd\IgniteBundle\Ignite\Channel\ChannelFactory
         arguments:
           - '@ignite.config'
           - '@ignite.channel.encoder'
@@ -89,18 +89,18 @@ services:
 #                   Authenticators
 #--------------------------------------------------------
     ignite.authenticator.user:
-      class: Juup\IgniteBundle\Ignite\Authenticator\User
+      class: JRemmurd\IgniteBundle\Ignite\Authenticator\User
       public: true
 
     ignite.authenticator.pimcore:
-      class: Juup\IgniteBundle\Ignite\Authenticator\Admin\Pimcore
+      class: JRemmurd\IgniteBundle\Ignite\Authenticator\Admin\Pimcore
       public: true
 
 #--------------------------------------------------------
 #                   Templating Helpers
 #--------------------------------------------------------
     ignite.templating.ignite:
-      class: Juup\IgniteBundle\Templating\Helper\Ignite
+      class: JRemmurd\IgniteBundle\Templating\Helper\Ignite
       tags:
         - { name: templating.helper, alias: ignite }
 
@@ -108,6 +108,6 @@ services:
 #                   Event Listeners
 #--------------------------------------------------------
     ignite.listener.setup:
-      class: Juup\IgniteBundle\EventListener\SetupListener
+      class: JRemmurd\IgniteBundle\EventListener\SetupListener
       tags:
         - { name: kernel.event_listener, event: kernel.controller }

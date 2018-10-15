@@ -6,16 +6,16 @@
  * Time: 21:47
  */
 
-namespace Juup\IgniteBundle\Templating\Helper;
+namespace JRemmurd\IgniteBundle\Templating\Helper;
 
 
-use Juup\IgniteBundle\Ignite\Radio;
-use Juup\IgniteBundle\Ignite\RadioInterface;
+use JRemmurd\IgniteBundle\Ignite\Radio;
+use JRemmurd\IgniteBundle\Ignite\RadioInterface;
 use Symfony\Component\Templating\Helper\Helper;
 
 /**
  * Class Ignite
- * @package Juup\IgniteBundle\Templating\Helper
+ * @package JRemmurd\IgniteBundle\Templating\Helper
  */
 class Ignite extends Helper
 {

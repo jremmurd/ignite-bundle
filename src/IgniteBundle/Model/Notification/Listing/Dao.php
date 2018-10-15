@@ -1,7 +1,7 @@
 <?php
-namespace Juup\IgniteBundle\Model\Notification\Listing;
+namespace JRemmurd\IgniteBundle\Model\Notification\Listing;
 
-use Juup\IgniteBundle\Model\Notification;
+use JRemmurd\IgniteBundle\Model\Notification;
 use Pimcore\Model;
 
 /**

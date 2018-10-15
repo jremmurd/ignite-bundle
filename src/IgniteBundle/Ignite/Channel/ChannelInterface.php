@@ -6,10 +6,10 @@
  * Time: 14:18
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
-use Juup\IgniteBundle\Ignite\Driver\DriverInterface;
+use JRemmurd\IgniteBundle\Ignite\Driver\DriverInterface;
 
 interface ChannelInterface
 {

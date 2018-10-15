@@ -6,7 +6,7 @@
  * Time: 16:04
  */
 
-namespace Juup\IgniteBundle\Constant;
+namespace JRemmurd\IgniteBundle\Constant;
 
 
 class Intent extends AbstractConstant

@@ -6,10 +6,10 @@
  * Time: 16:02
  */
 
-namespace Juup\IgniteBundle\Ignite;
+namespace JRemmurd\IgniteBundle\Ignite;
 
 
-use Juup\IgniteBundle\Constant\ChannelType;
+use JRemmurd\IgniteBundle\Constant\ChannelType;
 
 class Config
 {

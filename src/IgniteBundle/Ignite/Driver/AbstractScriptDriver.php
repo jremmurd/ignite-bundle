@@ -6,11 +6,11 @@
  * Time: 20:57
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 /**
  * Class AbstractScriptDriver
- * @package Juup\IgniteBundle\Ignite\Driver
+ * @package JRemmurd\IgniteBundle\Ignite\Driver
  */
 abstract class AbstractScriptDriver extends AbstractDriver implements ScriptDriverInterface
 {

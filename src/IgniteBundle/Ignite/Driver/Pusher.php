@@ -6,13 +6,13 @@
  * Time: 14:57
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Channel\EventInterface;
-use Juup\IgniteBundle\Ignite\Config;
-use Juup\IgniteBundle\Ignite\Constant;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
+use JRemmurd\IgniteBundle\Ignite\Config;
+use JRemmurd\IgniteBundle\Ignite\Constant;
 use Symfony\Component\HttpFoundation\Request;
 
 class Pusher extends AbstractScriptDriver

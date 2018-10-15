@@ -6,7 +6,7 @@
  * Time: 21:33
  */
 
-namespace Juup\IgniteBundle\Ignite\Authenticator;
+namespace JRemmurd\IgniteBundle\Ignite\Authenticator;
 
 
 use Symfony\Component\HttpFoundation\Request;

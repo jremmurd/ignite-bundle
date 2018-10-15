@@ -6,11 +6,11 @@
  * Time: 14:18
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 
-use Juup\IgniteBundle\Ignite\Channel\AbstractChannel;
-use Juup\IgniteBundle\Ignite\Channel\EventInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\AbstractChannel;
+use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface DriverInterface

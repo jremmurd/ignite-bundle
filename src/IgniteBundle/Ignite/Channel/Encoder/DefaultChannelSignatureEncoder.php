@@ -6,10 +6,10 @@
  * Time: 19:05
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel\Encoder;
+namespace JRemmurd\IgniteBundle\Ignite\Channel\Encoder;
 
-use Juup\IgniteBundle\Constant\ChannelType;
-use Juup\IgniteBundle\Ignite\Config;
+use JRemmurd\IgniteBundle\Constant\ChannelType;
+use JRemmurd\IgniteBundle\Ignite\Config;
 
 /**
  * Class DefaultChannelSignatureEncoder

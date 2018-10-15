@@ -6,11 +6,11 @@
  * Time: 22:52
  */
 
-namespace Juup\IgniteBundle\EventListener;
+namespace JRemmurd\IgniteBundle\EventListener;
 
 
-use Juup\IgniteBundle\Ignite\Config;
-use Juup\IgniteBundle\Ignite\Radio;
+use JRemmurd\IgniteBundle\Ignite\Config;
+use JRemmurd\IgniteBundle\Ignite\Radio;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Class SetupListener
- * @package Juup\IgniteBundle\EventListener
+ * @package JRemmurd\IgniteBundle\EventListener
  */
 class SetupListener
 {

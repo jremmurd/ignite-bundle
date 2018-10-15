@@ -7,7 +7,7 @@ ignite:
   drivers:
   
     pusher:
-      service_id: Julians\IgniteBundle\Ignite\Driver\Pusher 
+      service_id: JRemmurd\IgniteBundle\Ignite\Driver\Pusher 
       config:
         key: "pusher-application-key"
         secret: "pusher-application-secret"
@@ -17,10 +17,10 @@ ignite:
         log_to_console: true
         
     logger:
-      service_id: Julians\IgniteBundle\Ignite\Driver\Logger   # logs to Pimcore Application Logger 
+      service_id: JRemmurd\IgniteBundle\Ignite\Driver\Logger   # logs to Pimcore Application Logger 
       
     notification:
-      service_id: Julians\IgniteBundle\Ignite\Driver\Notification   # persists events into database
+      service_id: JRemmurd\IgniteBundle\Ignite\Driver\Notification   # persists events into database
       
   channels:   
     strict_parameters: true                                   # channel parameters have to be configured

@@ -6,21 +6,21 @@
  * Time: 13:51
  */
 
-namespace Juup\IgniteBundle\Ignite;
+namespace JRemmurd\IgniteBundle\Ignite;
 
 
-use Juup\IgniteBundle\Constant\ChannelType;
-use Juup\IgniteBundle\Constant\Intent;
-use Juup\IgniteBundle\Ignite\Channel\ChannelFactory;
-use Juup\IgniteBundle\Ignite\Channel\ChannelInterface;
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Driver\DriverInterface;
-use Juup\IgniteBundle\Ignite\Driver\ScriptDriverInterface;
+use JRemmurd\IgniteBundle\Constant\ChannelType;
+use JRemmurd\IgniteBundle\Constant\Intent;
+use JRemmurd\IgniteBundle\Ignite\Channel\ChannelFactory;
+use JRemmurd\IgniteBundle\Ignite\Channel\ChannelInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Driver\DriverInterface;
+use JRemmurd\IgniteBundle\Ignite\Driver\ScriptDriverInterface;
 use Psr\Container\ContainerInterface;
 
 /**
  * Class Radio
- * @package Juup\IgniteBundle\Ignite
+ * @package JRemmurd\IgniteBundle\Ignite
  */
 class Radio implements RadioInterface
 {

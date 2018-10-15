@@ -6,7 +6,7 @@
  * Time: 21:32
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel\PubSub;
+namespace JRemmurd\IgniteBundle\Ignite\Channel\PubSub;
 
 
 trait Publish

@@ -6,7 +6,7 @@
  * Time: 19:03
  */
 
-namespace Juup\IgniteBundle\Controller;
+namespace JRemmurd\IgniteBundle\Controller;
 
 
 use Pimcore\Controller\FrontendController;

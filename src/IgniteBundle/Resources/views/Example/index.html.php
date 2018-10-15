@@ -55,7 +55,7 @@ $script = (string)$this->ignite();
             </thead>
             <tbody>
             <?php foreach ($this->notifications as $notification):
-                /* @var Juup\IgniteBundle\Model\Notification $notification */
+                /* @var JRemmurd\IgniteBundle\Model\Notification $notification */
                 ?>
 
                 <tr>

@@ -6,15 +6,15 @@
  * Time: 14:57
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
-use Juup\IgniteBundle\Constant\Intent;
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Config;
-use Juup\IgniteBundle\Ignite\Driver\AbstractDriver;
-use Juup\IgniteBundle\Ignite\Driver\DriverInterface;
-use Juup\IgniteBundle\Ignite\Event\Notification;
+use JRemmurd\IgniteBundle\Constant\Intent;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Config;
+use JRemmurd\IgniteBundle\Ignite\Driver\AbstractDriver;
+use JRemmurd\IgniteBundle\Ignite\Driver\DriverInterface;
+use JRemmurd\IgniteBundle\Ignite\Event\Notification;
 use Psr\Container\ContainerInterface;
 
 abstract class AbstractChannel implements ChannelInterface

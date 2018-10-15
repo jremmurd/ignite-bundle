@@ -6,20 +6,20 @@
  * Time: 14:21
  */
 
-namespace Juup\IgniteBundle\Model;
+namespace JRemmurd\IgniteBundle\Model;
 
 
 use Carbon\Carbon;
-use Juup\IgniteBundle\Constant\EventType;
-use Juup\IgniteBundle\Ignite\Channel\EventInterface;
-use Juup\IgniteBundle\Model\Notification\Dao;
+use JRemmurd\IgniteBundle\Constant\EventType;
+use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
+use JRemmurd\IgniteBundle\Model\Notification\Dao;
 use Pimcore\Event\Model\ElementEvent;
 use Pimcore\Model\AbstractModel;
 use Pimcore\Tool\Authentication;
 
 /**
  * Class Notification
- * @package Juup\IgniteBundle\Model
+ * @package JRemmurd\IgniteBundle\Model
  *
  * @method Dao getDao()
  */
@@ -84,7 +84,7 @@ class Notification extends AbstractModel
      */
     public static function createFromEvent(EventInterface $event)
     {
-        /* @var \Juup\IgniteBundle\Ignite\Event\Notification $event */
+        /* @var \JRemmurd\IgniteBundle\Ignite\Event\Notification $event */
         $record = new self();
         $record->setNotificationData($event->getType(), $event->getTitle(), $event->getMessage(), $event->getTargetUser(), $event->getNotificationData(), $event->getSourceUser(), $event->getCreatedAt()->timestamp);
         return $record;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Juup\IgniteBundle\Controller;
+namespace JRemmurd\IgniteBundle\Controller;
 
 use Pimcore\Controller\FrontendController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

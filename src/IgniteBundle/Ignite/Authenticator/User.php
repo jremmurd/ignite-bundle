@@ -6,17 +6,17 @@
  * Time: 22:07
  */
 
-namespace Juup\IgniteBundle\Ignite\Authenticator;
+namespace JRemmurd\IgniteBundle\Ignite\Authenticator;
 
 
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Constant;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Constant;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 /**
  * Class User
- * @package Juup\IgniteBundle\Ignite\Authenticator
+ * @package JRemmurd\IgniteBundle\Ignite\Authenticator
  */
 class User implements AuthenticatorInterface
 {

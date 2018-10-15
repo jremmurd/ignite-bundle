@@ -6,7 +6,7 @@
  * Time: 17:02
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
 interface ChannelFactoryInterface

@@ -6,7 +6,7 @@
  * Time: 19:05
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel\Encoder;
+namespace JRemmurd\IgniteBundle\Ignite\Channel\Encoder;
 
 interface ChannelSignatureEncoderInterface
 {

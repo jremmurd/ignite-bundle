@@ -6,17 +6,17 @@
  * Time: 15:40
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
-use Juup\IgniteBundle\Constant\ChannelType;
-use Juup\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
-use Juup\IgniteBundle\Ignite\Config;
+use JRemmurd\IgniteBundle\Constant\ChannelType;
+use JRemmurd\IgniteBundle\Ignite\Channel\Encoder\ChannelSignatureEncoderInterface;
+use JRemmurd\IgniteBundle\Ignite\Config;
 use Psr\Container\ContainerInterface;
 
 /**
  * Class ChannelFactory
- * @package Juup\IgniteBundle\Ignite\Channel
+ * @package JRemmurd\IgniteBundle\Ignite\Channel
  */
 class ChannelFactory implements ChannelFactoryInterface
 {

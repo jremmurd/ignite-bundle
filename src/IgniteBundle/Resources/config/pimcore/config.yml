@@ -1,7 +1,7 @@
 ignite:
   drivers:
     pusher:
-      service_id: Juup\IgniteBundle\Ignite\Driver\Pusher
+      service_id: JRemmurd\IgniteBundle\Ignite\Driver\Pusher
       config:
         key: 65a135231d4a9f76bb63
         secret: d9c0de072952f8b62d39
@@ -11,10 +11,10 @@ ignite:
         log_to_console: true
 
     logger:
-      service_id: Juup\IgniteBundle\Ignite\Driver\Logger
+      service_id: JRemmurd\IgniteBundle\Ignite\Driver\Logger
 
     notification:
-      service_id: Juup\IgniteBundle\Ignite\Driver\Notification
+      service_id: JRemmurd\IgniteBundle\Ignite\Driver\Notification
 
   channels:
     strict_parameters: true

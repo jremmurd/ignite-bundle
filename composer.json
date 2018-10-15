@@ -1,5 +1,5 @@
 {
-  "name": "juup/ignite-bundle",
+  "name": "jremmurd/ignite-bundle",
   "license": "GPL-3.0-or-later",
   "type": "pimcore-bundle",
   "config": {
@@ -31,7 +31,7 @@
   "extra": {
     "pimcore": {
       "bundles": [
-        "\\Juup\\IgniteBundle\\JuupIgniteBundle"
+        "\\JRemmurd\\IgniteBundle\\JuupIgniteBundle"
       ]
     }
   }

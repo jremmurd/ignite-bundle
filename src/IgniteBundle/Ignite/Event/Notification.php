@@ -6,15 +6,15 @@
  * Time: 17:53
  */
 
-namespace Juup\IgniteBundle\Ignite\Event;
+namespace JRemmurd\IgniteBundle\Ignite\Event;
 
 use Carbon\Carbon;
-use Juup\IgniteBundle\Ignite\Channel\EventInterface;
-use Juup\IgniteBundle\Ignite\Driver\DriverInterface;
+use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
+use JRemmurd\IgniteBundle\Ignite\Driver\DriverInterface;
 
 /**
  * Class NotificationEvent
- * @package Juup\IgniteBundle\Ignite\Channel
+ * @package JRemmurd\IgniteBundle\Ignite\Channel
  */
 class Notification implements EventInterface
 {
@@ -26,7 +26,7 @@ class Notification implements EventInterface
     const DATA_TYPE_DATE = "date";
     const DATA_TYPE_BOOL = "bool";
 
-    /* @var \Juup\IgniteBundle\Model\Notification $notification */
+    /* @var \JRemmurd\IgniteBundle\Model\Notification $notification */
     protected $notification;
 
     /* @var array $data */
@@ -145,9 +145,9 @@ class Notification implements EventInterface
     }
 
     /**
-     * @return null|\Juup\IgniteBundle\Model\Notification
+     * @return null|\JRemmurd\IgniteBundle\Model\Notification
      */
-    public function getNotification(): ?\Juup\IgniteBundle\Model\Notification
+    public function getNotification(): ?\JRemmurd\IgniteBundle\Model\Notification
     {
         return $this->notification;
     }
@@ -225,9 +225,9 @@ class Notification implements EventInterface
     }
 
     /**
-     * @param \Juup\IgniteBundle\Model\Notification $notification
+     * @param \JRemmurd\IgniteBundle\Model\Notification $notification
      */
-    public function setNotification(\Juup\IgniteBundle\Model\Notification $notification)
+    public function setNotification(\JRemmurd\IgniteBundle\Model\Notification $notification)
     {
         $this->notification = $notification;
     }

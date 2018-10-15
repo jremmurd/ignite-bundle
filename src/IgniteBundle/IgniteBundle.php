@@ -1,8 +1,8 @@
 <?php
 
-namespace Juup\IgniteBundle;
+namespace JRemmurd\IgniteBundle;
 
-use Juup\IgniteBundle\Tools\Installer;
+use JRemmurd\IgniteBundle\Tools\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 
 class IgniteBundle extends AbstractPimcoreBundle

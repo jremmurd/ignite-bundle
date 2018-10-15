@@ -1,8 +1,8 @@
 <?php
-namespace Juup\IgniteBundle\Model\Notification;
+namespace JRemmurd\IgniteBundle\Model\Notification;
 
 
-use Juup\IgniteBundle\Model\Notification;
+use JRemmurd\IgniteBundle\Model\Notification;
 use Pimcore\Model;
 
 /**

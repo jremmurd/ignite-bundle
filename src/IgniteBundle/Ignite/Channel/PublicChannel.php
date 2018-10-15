@@ -6,7 +6,7 @@
  * Time: 14:58
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
 class PublicChannel extends AbstractChannel

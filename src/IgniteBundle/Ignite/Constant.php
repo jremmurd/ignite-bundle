@@ -6,7 +6,7 @@
  * Time: 15:42
  */
 
-namespace Juup\IgniteBundle\Ignite;
+namespace JRemmurd\IgniteBundle\Ignite;
 
 
 class Constant

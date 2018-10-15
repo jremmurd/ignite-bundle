@@ -1,6 +1,6 @@
 <?php
 
-namespace Juup\IgniteBundle\DependencyInjection;
+namespace JRemmurd\IgniteBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

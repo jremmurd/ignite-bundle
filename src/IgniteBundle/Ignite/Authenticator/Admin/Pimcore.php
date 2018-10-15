@@ -6,19 +6,19 @@
  * Time: 22:07
  */
 
-namespace Juup\IgniteBundle\Ignite\Authenticator\Admin;
+namespace JRemmurd\IgniteBundle\Ignite\Authenticator\Admin;
 
 
-use Juup\IgniteBundle\Constant\Permission;
-use Juup\IgniteBundle\Ignite\Authenticator\AuthenticatorInterface;
-use Juup\IgniteBundle\Tools\Installer;
+use JRemmurd\IgniteBundle\Constant\Permission;
+use JRemmurd\IgniteBundle\Ignite\Authenticator\AuthenticatorInterface;
+use JRemmurd\IgniteBundle\Tools\Installer;
 use Pimcore\Model\User;
 use Pimcore\Tool\Authentication;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Pimcore
- * @package Juup\IgniteBundle\Ignite\Authenticator\Admin
+ * @package JRemmurd\IgniteBundle\Ignite\Authenticator\Admin
  */
 class Pimcore implements AuthenticatorInterface
 {

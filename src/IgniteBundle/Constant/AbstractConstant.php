@@ -6,7 +6,7 @@
  * Time: 22:54
  */
 
-namespace Juup\IgniteBundle\Constant;
+namespace JRemmurd\IgniteBundle\Constant;
 
 
 class AbstractConstant

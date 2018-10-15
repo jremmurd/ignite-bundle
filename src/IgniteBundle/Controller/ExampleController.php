@@ -6,14 +6,14 @@
  * Time: 19:03
  */
 
-namespace Juup\IgniteBundle\Controller;
+namespace JRemmurd\IgniteBundle\Controller;
 
 
-use Juup\IgniteBundle\Constant\NotificationType;
-use Juup\IgniteBundle\Ignite\Channel\Message;
-use Juup\IgniteBundle\Ignite\Event\Notification;
-use Juup\IgniteBundle\Ignite\Radio;
-use Juup\IgniteBundle\Model\Notification\Listing;
+use JRemmurd\IgniteBundle\Constant\NotificationType;
+use JRemmurd\IgniteBundle\Ignite\Channel\Message;
+use JRemmurd\IgniteBundle\Ignite\Event\Notification;
+use JRemmurd\IgniteBundle\Ignite\Radio;
+use JRemmurd\IgniteBundle\Model\Notification\Listing;
 use Pimcore\Controller\FrontendController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ExampleController
- * @package Juup\IgniteBundle\Controller
+ * @package JRemmurd\IgniteBundle\Controller
  *
  * @Route("/ignite")
  */

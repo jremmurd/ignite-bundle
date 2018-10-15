@@ -6,10 +6,10 @@
  * Time: 19:57
  */
 
-namespace Juup\IgniteBundle\Tools;
+namespace JRemmurd\IgniteBundle\Tools;
 
-use Juup\IgniteBundle\Constant\Permission;
-use Juup\IgniteBundle\Model\Notification;
+use JRemmurd\IgniteBundle\Constant\Permission;
+use JRemmurd\IgniteBundle\Model\Notification;
 use Pimcore\Db;
 use Pimcore\Model\Translation\Admin;
 use Pimcore\Model\User\Permission\Definition;

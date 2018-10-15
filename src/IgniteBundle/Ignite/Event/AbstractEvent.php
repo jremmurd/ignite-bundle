@@ -6,7 +6,7 @@
  * Time: 17:52
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
 use Carbon\Carbon;

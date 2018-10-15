@@ -6,10 +6,10 @@
  * Time: 21:02
  */
 
-namespace Juup\IgniteBundle\Controller\Admin;
+namespace JRemmurd\IgniteBundle\Controller\Admin;
 
 
-use Juup\IgniteBundle\Ignite\Radio;
+use JRemmurd\IgniteBundle\Ignite\Radio;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DefaultController
- * @package Juup\IgniteBundle\Controller\Admin
+ * @package JRemmurd\IgniteBundle\Controller\Admin
  *
  * @Route("/admin/ignite")
  */

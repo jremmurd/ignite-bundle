@@ -6,17 +6,17 @@
  * Time: 14:57
  */
 
-namespace Juup\IgniteBundle\Ignite\Driver;
+namespace JRemmurd\IgniteBundle\Ignite\Driver;
 
 
-use Juup\IgniteBundle\Ignite\Channel\EventInterface;
-use Juup\IgniteBundle\Ignite\Radio;
+use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
+use JRemmurd\IgniteBundle\Ignite\Radio;
 use Pimcore\Log\ApplicationLogger;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Logger
- * @package Juup\IgniteBundle\Ignite\Driver
+ * @package JRemmurd\IgniteBundle\Ignite\Driver
  */
 class Logger extends AbstractDriver
 {

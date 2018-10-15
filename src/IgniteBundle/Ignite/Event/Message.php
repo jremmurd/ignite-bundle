@@ -6,7 +6,7 @@
  * Time: 17:53
  */
 
-namespace Juup\IgniteBundle\Ignite\Channel;
+namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 
 class Message extends AbstractEvent
