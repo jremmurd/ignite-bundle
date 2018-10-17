@@ -3,9 +3,9 @@ ignite:
     pusher:
       service_id: JRemmurd\IgniteBundle\Ignite\Driver\Pusher
       config:
-        key: 65a135231d4a9f76bb63
-        secret: d9c0de072952f8b62d39
-        id: 509671
+        key: ################
+        secret: ################
+        id: #######
         options:
           cluster: eu
         log_to_console: true
