@@ -1,5 +1,5 @@
 {
-  "name": "jremmurd/ignite-bundle",
+  "name": "jremmurd/pimcore-ignite-bundle",
   "license": "GPL-3.0-or-later",
   "type": "pimcore-bundle",
   "config": {
@@ -15,23 +15,22 @@
     {
       "name": "Julian Raab",
       "email": "julian@raab.media",
-      "homepage": "www.raab.media"
+      "homepage": "http://www.raab.media"
     }
   ],
   "require": {
     "php": ">=7.1",
-    "pimcore/core-version": "^5.1.0",
     "pusher/pusher-php-server": "^3.2"
   },
   "autoload": {
     "psr-4": {
-      "Juup\\": "src/"
+      "JRemmurd\\": "src/"
     }
   },
   "extra": {
     "pimcore": {
       "bundles": [
-        "\\JRemmurd\\IgniteBundle\\JuupIgniteBundle"
+        "\\JRemmurd\\IgniteBundle\\JRemmurdIgniteBundle"
       ]
     }
   }
