@@ -15,7 +15,7 @@
     {
       "name": "Julian Raab",
       "email": "julian@raab.media",
-      "homepage": "www.raab.media"
+      "homepage": "http://www.raab.media"
     }
   ],
   "require": {
@@ -31,7 +31,7 @@
   "extra": {
     "pimcore": {
       "bundles": [
-        "\\JRemmurd\\IgniteBundle\\JuupIgniteBundle"
+        "JRemmurd\\IgniteBundle\\JRemmurdIgniteBundle"
       ]
     }
   }

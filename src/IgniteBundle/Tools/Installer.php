@@ -58,6 +58,8 @@ class Installer extends \Pimcore\Extension\Bundle\Installer\AbstractInstaller
         $this->installPermissions();
         $this->installTranslations();
 
+        rename("../Install/ignite.yml", PIMCORE_APP_ROOT . "/pimcore/ignite.yml");
+
         $notificationTable = Notification\Dao::TABLE_NAME;
         $notificationDataTable = Notification\Dao::TABLE_NAME_DATA;
 
