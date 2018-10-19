@@ -3,7 +3,7 @@
 Install the `IgniteBundle` via
 
 ```
-composer require jremmurd/ignite-bundle
+composer require jremmurd/pimcore-ignite-bundle
 ```
 
 Now if you open the admin interface of your Pimcore application and open the `Extensions` tab in the `Tools` section, the new extension `Pimcore Ignite` should be listed. Click the install button and reload Pimcore.
