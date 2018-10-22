@@ -48,7 +48,7 @@ class Logger extends AbstractDriver
 
     protected function getComponent()
     {
-        return "Ignite Logger - Namespace: {$this->radio->getChannelNamespace()}";
+        return "Ignite - Logger - {$this->radio->getChannelNamespace()}";
     }
 
     /**

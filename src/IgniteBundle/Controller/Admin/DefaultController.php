@@ -11,6 +11,7 @@ namespace JRemmurd\IgniteBundle\Controller\Admin;
 
 use JRemmurd\IgniteBundle\Ignite\Radio;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
+use Pimcore\Log\ApplicationLogger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,25 +35,34 @@ class DefaultController extends AdminController
      */
     public function initAction(Request $request, Radio $radio)
     {
-        $radio
-            ->getPresenceChannel("user")
-            ->subscribe();
+        try {
+            $radio
+                ->getPresenceChannel("user")
+                ->subscribe();
 
-        $radio
-            ->getPrivateChannel("user_notifications", [
-                "id" => $this->getUser()->getId()
-            ])->subscribe();
+            $radio
+                ->getPrivateChannel("user_notifications", [
+                    "id" => $this->getUser()->getId()
+                ])->subscribe();
 
-        $csrfToken = $request->get("csrf");
+            $csrfToken = $request->get("csrf");
 
-        $script = $radio->getScript(true, [
-            "auth" => [
-                "params" => [
-                    "csrfToken" => $csrfToken,
-                    "driver" => "pusher"
+            $script = $radio->getScript(true, [
+                "auth" => [
+                    "params" => [
+                        "csrfToken" => $csrfToken,
+                        "driver" => "pusher"
+                    ]
                 ]
-            ]
-        ]);
+            ]);
+        } catch (\Exception $e) {
+            ApplicationLogger::getInstance("Ignite", true)
+                ->info("Could not initialize IgniteBundle. -> " . $e->getMessage() . ", {$e->getFile()}, {$e->getLine()}");
+
+            return new JsonResponse([
+                "success" => false
+            ]);
+        }
 
         return new JsonResponse([
             "script" => $script
