@@ -5,7 +5,7 @@
 /* Icons start */
 .ignitebundle_icon_users  {
     cursor: pointer;
-    background: url(/pimcore/static6/img/flat-color-icons/manager.svg) center center no-repeat !important;
+    background: url(/bundles/pimcoreadmin/img/flat-color-icons/manager.svg) center center no-repeat !important;
 }
 /* Icons end */
 

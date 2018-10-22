@@ -55,8 +55,6 @@ pimcore.plugin.IgniteBundle = Class.create(pimcore.plugin.admin, {
                     console.error(e);
                 });
             });
-
-        pimcore.helpers.initMenuTooltips();
     }
 });
 

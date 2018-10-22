@@ -23,24 +23,23 @@ IgniteAdmin.Presence = (function () {
 
             var i = 0;
 
-            if (typeof members == "array_map") {
-                members.each(function (member) {
-                    if (i !== 0) {
-                        memberNames += ", "
-                    }
+            $.each(members.members, function (index, member) {
+                if (i !== 0) {
+                    memberNames += ", "
+                }
 
-                    if (!member.info) {
-                        console.log("Missing user info", member);
-                        return;
-                    }
+                if (!member.name) {
+                    console.log("Missing user info", member.name);
+                    return;
+                }
 
-                    memberNames += ucFirst(member.info.name);
-                    i++;
-                });
-            }
+                memberNames += ucFirst(member.name);
+                i++;
+            });
 
             users.setAttribute("data-menu-tooltip", memberNames);
             $users.removeClass("initialized");
+
             pimcore.helpers.initMenuTooltips();
         });
 
@@ -53,12 +52,13 @@ IgniteAdmin.Presence = (function () {
             var memberNames = users.getAttribute("data-menu-tooltip") + ", " + ucFirst(member.info.name);
             users.setAttribute("data-menu-tooltip", memberNames);
             $users.removeClass("initialized");
+
             pimcore.helpers.initMenuTooltips();
         });
 
         Ignite.channels.user.bind('pusher:member_removed', function (member) {
             users.setAttribute("data-ignite-online-count", parseInt(users.getAttribute("data-ignite-online-count")) - 1);
-            var regex = ", " + ucFirst(member.info.name) + "| " + ucFirst(member.info.name);
+            var regex = ", " + ucFirst(member.info.name) + "|" + ucFirst(member.info.name);
             regex = new RegExp(regex, "g");
 
             var memberNames = users.getAttribute("data-menu-tooltip").replace(regex, "");
