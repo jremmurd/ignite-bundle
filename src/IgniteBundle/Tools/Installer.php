@@ -11,7 +11,6 @@ namespace JRemmurd\IgniteBundle\Tools;
 use JRemmurd\IgniteBundle\Constant\Permission;
 use JRemmurd\IgniteBundle\Model\Notification;
 use Pimcore\Db;
-use Pimcore\Model\Translation\Admin;
 use Pimcore\Model\User\Permission\Definition;
 
 class Installer extends \Pimcore\Extension\Bundle\Installer\AbstractInstaller
@@ -56,9 +55,9 @@ class Installer extends \Pimcore\Extension\Bundle\Installer\AbstractInstaller
     public function install()
     {
         $this->installPermissions();
-        $this->installTranslations();
+//        $this->installTranslations();
 
-        rename("../Install/ignite.yml", PIMCORE_APP_ROOT . "/pimcore/ignite.yml");
+        copy(dirname(__FILE__) . "/../Install/ignite.yml", PIMCORE_APP_ROOT . "/config/ignite.example.yml");
 
         $notificationTable = Notification\Dao::TABLE_NAME;
         $notificationDataTable = Notification\Dao::TABLE_NAME_DATA;

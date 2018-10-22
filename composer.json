@@ -30,7 +30,7 @@
   "extra": {
     "pimcore": {
       "bundles": [
-        "JRemmurd\\IgniteBundle\\JRemmurdIgniteBundle"
+        "JRemmurd\\IgniteBundle\\IgniteBundle"
       ]
     }
   }

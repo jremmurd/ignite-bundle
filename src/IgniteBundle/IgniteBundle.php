@@ -5,7 +5,7 @@ namespace JRemmurd\IgniteBundle;
 use JRemmurd\IgniteBundle\Tools\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 
-class JRemmurdIgniteBundle extends AbstractPimcoreBundle
+class IgniteBundle extends AbstractPimcoreBundle
 {
     public function getJsPaths()
     {

@@ -114,7 +114,7 @@ class ExampleController extends FrontendController
             ->publish(new Notification("Hello Notification with data", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO ,  [
                     "related_object" => [
                         "type" => Notification::DATA_TYPE_OBJECT,
-                        "data" => 1
+                        "data" => 99999999
                     ]
                 ])
             );
