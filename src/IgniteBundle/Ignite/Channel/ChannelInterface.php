@@ -39,6 +39,6 @@ interface ChannelInterface
     /**
      * @return string
      */
-    public function getName(): string;
+    public function getSignature(): string;
 
 }

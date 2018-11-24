@@ -20,8 +20,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
  */
 class User implements AuthenticatorInterface
 {
-    /* @var ChannelSignatureEncoderInterface $channelNameEncoder */
-    protected $channelNameEncoder;
+    /* @var ChannelSignatureEncoderInterface $signatureEncoder */
+    protected $signatureEncoder;
 
     /* @var mixed $user */
     protected $user;
@@ -29,12 +29,12 @@ class User implements AuthenticatorInterface
     /**
      * User constructor.
      * @param TokenStorage $tokenStorage
-     * @param ChannelSignatureEncoderInterface $channelNameEncoder
+     * @param ChannelSignatureEncoderInterface $signatureEncoder
      */
-    public function __construct(TokenStorage $tokenStorage, ChannelSignatureEncoderInterface $channelNameEncoder)
+    public function __construct(TokenStorage $tokenStorage, ChannelSignatureEncoderInterface $signatureEncoder)
     {
         $this->user = $tokenStorage->getToken()->getUser();
-        $this->channelNameEncoder = $channelNameEncoder;
+        $this->signatureEncoder = $signatureEncoder;
     }
 
     /**
@@ -45,7 +45,7 @@ class User implements AuthenticatorInterface
     public function authenticateChannel(Request $request): bool
     {
         $channelName = $request->get(Constant::POST_PARAM_CHANNEL_NAME);
-        $parameters = $this->channelNameEncoder->decode($channelName)["parameters"];
+        $parameters = $this->signatureEncoder->decode($channelName)["parameters"];
 
         return $this->getUser()->getId() == $parameters["id"];
     }

@@ -38,7 +38,7 @@ class ExampleController extends FrontendController
     {
         if ($user = $this->getUser()) {
             $radio
-                ->getChannel("user", ["id" => $user ->getId()])
+                ->getChannel("user", ["id" => $user->getId()])
                 ->subscribe();
         }
 
@@ -77,7 +77,9 @@ class ExampleController extends FrontendController
         $child_1->publish(new Message("Hello from Global Child 1!"));
         $child_2->publish(new Message("Hello from Global Child 2!"));
 
-        return new Response("Done.");
+        return new Response("Published to channel with signature {$globalChannel->getSignature()}. 
+        Published to channel with signature {$child_1->getSignature()}. 
+        Published to channel with signature {$child_2->getSignature()}.");
     }
 
     /**
@@ -90,10 +92,15 @@ class ExampleController extends FrontendController
      */
     public function publishToPresenceChannel(Request $request, Radio $radio)
     {
-        $channel = $radio->getPresenceChannel("user", ["id" => $this->getUser()->getId()]);
-        $channel->publish(new Message("Hello from User!"));
+        $userId = $this->getUser() ? $this->getUser()->getId() : 1;
 
-        return new Response("Done.");
+        $channel = $radio
+            ->getPresenceChannel("user", [
+                "id" => $userId
+            ])
+            ->publish(new Message("Hello from User!"));
+
+        return new Response("Published to channel with signature {$channel->getSignature()}.");
     }
 
     /**
@@ -110,8 +117,8 @@ class ExampleController extends FrontendController
         $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 99999999]);
 
         $notifiedChannel
-            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!", NotificationType::WARNING ))
-            ->publish(new Notification("Hello Notification with data", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO ,  [
+            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!", NotificationType::WARNING))
+            ->publish(new Notification("Hello Notification with data", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO, [
                     "related_object" => [
                         "type" => Notification::DATA_TYPE_OBJECT,
                         "data" => 99999999
@@ -119,7 +126,7 @@ class ExampleController extends FrontendController
                 ])
             );
 
-        return new Response("Done.");
+        return new Response("Published to channel with signature {$notifiedChannel->getSignature()}.");
     }
 
 }

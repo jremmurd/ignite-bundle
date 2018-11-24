@@ -57,59 +57,59 @@ class Radio implements RadioInterface
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @param array $parameters
      * @param string $type
      * @return ChannelInterface
      * @throws \Exception
      */
-    public function getChannel(string $identifier, $parameters = [], string $type = ""): ChannelInterface
+    public function getChannel(string $name, $parameters = [], string $type = ""): ChannelInterface
     {
-        $identifier = ChannelType::removePrefix($identifier);
+        $name = ChannelType::removePrefix($name);
 
-        $name = $this->channelNameEncoder->encode($identifier, $parameters);
-        $nameWithoutPrefix = $this->channelNameEncoder->encode($identifier, $parameters, true);
+        $signature = $this->channelNameEncoder->encode($name, $parameters);
+        $signatureWithoutPrefix = $this->channelNameEncoder->encode($name, $parameters, true);
 
-        $this->channelNameEncoder->validateChannelName($nameWithoutPrefix);
+        $this->channelNameEncoder->validateChannelSignature($signatureWithoutPrefix);
 
-        if (!$this->channels[$name]) {
-            $this->channels[$name] = $this->channelFactory->createByConfig($identifier, $name);
+        if (!$this->channels[$signature]) {
+            $this->channels[$signature] = $this->channelFactory->createByConfig($name, $signature);
         }
 
-        return $this->channels[$name];
+        return $this->channels[$signature];
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @param array $parameters
      * @return ChannelInterface
      * @throws \Exception
      */
-    public function getPublicChannel(string $identifier, $parameters = [])
+    public function getPublicChannel(string $name, $parameters = [])
     {
-        return $this->getChannel($identifier, $parameters, ChannelType::PUBLIC);
+        return $this->getChannel($name, $parameters, ChannelType::PUBLIC);
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @param array $parameters
      * @return ChannelInterface
      * @throws \Exception
      */
-    public function getPrivateChannel(string $identifier, $parameters = [])
+    public function getPrivateChannel(string $name, $parameters = [])
     {
-        return $this->getChannel($identifier, $parameters, ChannelType::PRIVATE);
+        return $this->getChannel($name, $parameters, ChannelType::PRIVATE);
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @param array $parameters
      * @return ChannelInterface
      * @throws \Exception
      */
-    public function getPresenceChannel(string $identifier, $parameters = [])
+    public function getPresenceChannel(string $name, $parameters = [])
     {
-        return $this->getChannel($identifier, $parameters, ChannelType::PRESENCE);
+        return $this->getChannel($name, $parameters, ChannelType::PRESENCE);
     }
 
     /**
@@ -130,7 +130,7 @@ class Radio implements RadioInterface
 
         foreach ($channels as $channel) {
             $intent = $channel->getIntent();
-            $intents[$intent][] = $channel->getName();
+            $intents[$intent][] = $channel->getSignature();
         }
 
         return $intents;

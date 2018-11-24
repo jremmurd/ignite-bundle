@@ -24,13 +24,13 @@ ignite:
     namespaces:
       admin:
         default_driver_name: pusher
-        authEndpoint: /admin/ignite/auth
+        auth_endpoint: /admin/ignite/auth
         channels:
           presence:
           - name: user
             authenticator: ignite.authenticator.pimcore
             drivers: [logger, pusher]
-          #              useSlugForJS: false # include parameters in js channel name
+          #              use_slug_for_js: false # include parameters in js channel name
           private:
           - name: user_notifications
             authenticator: ignite.authenticator.pimcore
@@ -40,7 +40,7 @@ ignite:
 
       app:
         pattern: ^/ignite
-        authEndpoint: /ignite/auth/{driver}
+        auth_endpoint: /ignite/auth/{driver}
         channels:
           public:
           - name: global

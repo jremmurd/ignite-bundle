@@ -19,8 +19,8 @@ use Psr\Container\ContainerInterface;
 
 abstract class AbstractChannel implements ChannelInterface
 {
-    /* @var string $name */
-    protected $name;
+    /* @var string $signature */
+    protected $signature;
 
     /* @var DriverInterface[] $drivers */
     protected $drivers;
@@ -39,24 +39,24 @@ abstract class AbstractChannel implements ChannelInterface
 
     /**
      * AbstractChannel constructor.
-     * @param $name
+     * @param $signature
      * @param Config $config
      * @param ContainerInterface $driverLocator
      * @param ChannelSignatureEncoderInterface $channelNameEncoder
      * @throws \Exception
      */
-    public function __construct($name, Config $config, ContainerInterface $driverLocator, ChannelSignatureEncoderInterface $channelNameEncoder)
+    public function __construct(string $signature, Config $config, ContainerInterface $driverLocator, ChannelSignatureEncoderInterface $channelNameEncoder)
     {
-        $this->name = $name;
+        $this->signature = $signature;
         $this->config = $config;
         $this->driverLocator = $driverLocator;
         $this->drivers = [];
 
-        $decodedChannelName = $channelNameEncoder->decode($name);
-        $channelConfig = $config->getChannelConfig($decodedChannelName["identifier"]);
+        $decodedChannelName = $channelNameEncoder->decode($signature);
+        $channelConfig = $config->getChannelConfig($decodedChannelName["name"]);
 
         if (method_exists($this, "validateChannelName") && !$this->validateChannelName()) {
-            throw new \Exception("Invalid channel name: {$name}");
+            throw new \Exception("Invalid channel name: {$signature}");
         }
 
         if (empty($channelConfig["drivers"])) {
@@ -117,12 +117,12 @@ abstract class AbstractChannel implements ChannelInterface
      */
     protected function initializeParentChannels()
     {
-        $currentChannelParts = explode(".", $this->getName());
+        $currentChannelParts = explode(".", $this->getSignature());
 
         if (!$this->parentChannels) {
             foreach ($this->config->getChannelNames() as $channelName) {
                 foreach ($currentChannelParts as $i => $currentChannelPart) {
-                    if ($channelName == $this->getName()) {
+                    if ($channelName == $this->getSignature()) {
                         continue;
                     }
 
@@ -146,7 +146,7 @@ abstract class AbstractChannel implements ChannelInterface
      */
     protected function getRelevantChannels($ignoreParents = false)
     {
-        $channels = [$this->getName()];
+        $channels = [$this->getSignature()];
 
         if ($ignoreParents) {
             return $channels;
@@ -172,7 +172,7 @@ abstract class AbstractChannel implements ChannelInterface
 
         if (method_exists($event, "addNotificationData")) {
             /* @var Notification $event */
-            $event->addNotificationData("channelName", Notification::DATA_TYPE_TEXT, $this->getName());
+            $event->addNotificationData("channelName", Notification::DATA_TYPE_TEXT, $this->getSignature());
         }
 
         foreach ($this->getDrivers() as $driver) {
@@ -190,7 +190,7 @@ abstract class AbstractChannel implements ChannelInterface
         $this->intent = Intent::SUBSCRIBE;
 
         foreach ($this->getDrivers() as $driverService) {
-            $driverService->onSubscribe($this->getName());
+            $driverService->onSubscribe($this->getSignature());
         }
 
         return $this;
@@ -204,7 +204,7 @@ abstract class AbstractChannel implements ChannelInterface
         $this->intent = Intent::UNSUBSCRIBE;
 
         foreach ($this->getDrivers() as $driverService) {
-            $driverService->onUnSubscribe($this->getName());
+            $driverService->onUnSubscribe($this->getSignature());
         }
 
         return $this;
@@ -230,9 +230,9 @@ abstract class AbstractChannel implements ChannelInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getSignature(): string
     {
-        return $this->name;
+        return $this->signature;
     }
 
     /**

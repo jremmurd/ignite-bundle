@@ -17,7 +17,7 @@
             ->getPublicChannel("global")
             ->subscribe();
             
-        // Channel type will be resolve by config type, if several channel with the same identifier exist the priority is as follows: presence -> private -> public
+        // Channel type will be resolve by config type, if several channel with the same name exist the priority is as follows: presence -> private -> public
         $radio
             ->getChannel("global")
             ->subscribe();

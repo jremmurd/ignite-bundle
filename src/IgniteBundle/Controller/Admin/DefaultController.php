@@ -43,7 +43,8 @@ class DefaultController extends AdminController
             $radio
                 ->getPrivateChannel("user_notifications", [
                     "id" => $this->getUser()->getId()
-                ])->subscribe();
+                ])
+                ->subscribe();
 
             $csrfToken = $request->get("csrf");
 

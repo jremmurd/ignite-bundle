@@ -83,10 +83,10 @@ class Config
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @return array
      */
-    public function getChannelConfig(string $identifier)
+    public function getChannelConfig(string $name)
     {
         foreach (ChannelType::getAll() as $type) {
             try {
@@ -94,8 +94,8 @@ class Config
             } catch (\Exception $e) {
                 // nothing to do here
             }
-            if (array_key_exists($identifier, $typeConfigs)) {
-                $typeConfig = $typeConfigs[$identifier];
+            if (array_key_exists($name, $typeConfigs)) {
+                $typeConfig = $typeConfigs[$name];
                 $typeConfig["type"] = $type;
                 return $typeConfig;
             }
@@ -136,12 +136,12 @@ class Config
     }
 
     /**
-     * @param $identifier
+     * @param $name
      * @return array
      */
-    public function getChannelParameters($identifier)
+    public function getChannelParameters($name)
     {
-        return @$this->getChannelConfig($identifier)["parameters"] ?: [];
+        return @$this->getChannelConfig($name)["parameters"] ?: [];
     }
 
     /**
@@ -168,45 +168,45 @@ class Config
     }
 
     /**
-     * @param $identifier
+     * @param $name
      * @param $type
      * @return bool
      * @throws \Exception
      */
-    protected function isChannelType($identifier, $type)
+    protected function isChannelType($name, $type)
     {
-        return $this->getChannelConfig($identifier)["type"] == $type;
+        return $this->getChannelConfig($name)["type"] == $type;
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @return bool
      * @throws \Exception
      */
-    public function isPresenceChannel(string $identifier)
+    public function isPresenceChannel(string $name)
     {
-        return $this->isChannelType($identifier, ChannelType::PRESENCE);
+        return $this->isChannelType($name, ChannelType::PRESENCE);
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @return bool
      * @throws \Exception
      */
-    public function isPrivateChannel(string $identifier)
+    public function isPrivateChannel(string $name)
     {
-        return $this->isChannelType($identifier, ChannelType::PRIVATE);
+        return $this->isChannelType($name, ChannelType::PRIVATE);
     }
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @return bool
      * @throws \Exception
      */
-    public function isPublicChannel(string $identifier)
+    public function isPublicChannel(string $name)
     {
-        return $this->isChannelType($identifier, ChannelType::PUBLIC) ||
-            (!$this->isPresenceChannel($identifier) && !$this->isPrivateChannel($identifier));
+        return $this->isChannelType($name, ChannelType::PUBLIC) ||
+            (!$this->isPresenceChannel($name) && !$this->isPrivateChannel($name));
     }
 
     /**

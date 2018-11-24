@@ -31,7 +31,7 @@ ignite:
     
       admin:
         default_driver_name: pusher                           # for each namespace a default driver can be set
-        authEndpoint: /admin/ignite/auth
+        auth_endpoint: /admin/ignite/auth
         channels:
         
           presence:
@@ -46,7 +46,7 @@ ignite:
               - id
       app:
         pattern: ^/ignite
-        authEndpoint: /ignite/auth/{driver}
+        auth_endpoint: /ignite/auth/{driver}
         channels:   
                
           public:                                             # public channels do not necessarily be configured
@@ -61,7 +61,7 @@ ignite:
           
           presence:                                           # max 100 users (Pusher driver only)
             - name: user
-              useSlugForJS: false                             # whether the parameters should be included in the js channel variable names: 'user' vs. 'user_12345'
+              use_slug_for_js: false                          # whether the parameters should be included in the js channel variable names: 'user' vs. 'user_12345'
               parameters:                                     
                 - id
               authenticator: ignite.authenticator.user

@@ -43,32 +43,32 @@ class ChannelFactory implements ChannelFactoryInterface
     }
 
     /**
-     * @param string|null $identifier
-     * @param string $name
+     * @param string|null $name
+     * @param string $signature
      * @param array $parameters
      * @param string $type
      * @return ChannelInterface|null
      * @throws \Exception
      */
-    public function createByConfig(string $identifier = "", string $name = "", $parameters = [], string $type = ""): ?ChannelInterface
+    public function createByConfig(string $name = "", string $signature = "", $parameters = [], string $type = ""): ?ChannelInterface
     {
-        if (!$identifier && $name) {
-            $identifier = $this->channelNameEncoder->decode($name)["identifier"];
-        } elseif (!$name && ($identifier && $parameters)) {
-            $name = $this->channelNameEncoder->encode($identifier, $parameters);
-        } elseif (!$name && !$identifier) {
-            throw new \Exception("Identifier or name of channel must be provided.");
+        if (!$name && $signature) {
+            $name = $this->channelNameEncoder->decode($signature)["name"];
+        } elseif (!$signature && ($name && $parameters)) {
+            $signature = $this->channelNameEncoder->encode($name, $parameters);
+        } elseif (!$signature && !$name) {
+            throw new \Exception("Name or signature of channel must be provided.");
         }
 
-        $name = $name ?: $identifier;
+        $signature = $signature ?: $name;
 
         if (!$type) {
-            if ($this->config->isPresenceChannel($identifier)) {
-                return new PresenceChannel($name, $this->config, $this->driverLocator, $this->channelNameEncoder);
-            } elseif ($this->config->isPrivateChannel($identifier)) {
-                return new PrivateChannel($name, $this->config, $this->driverLocator, $this->channelNameEncoder);
+            if ($this->config->isPresenceChannel($name)) {
+                return new PresenceChannel($signature, $this->config, $this->driverLocator, $this->channelNameEncoder);
+            } elseif ($this->config->isPrivateChannel($name)) {
+                return new PrivateChannel($signature, $this->config, $this->driverLocator, $this->channelNameEncoder);
             } else {
-                return new PublicChannel($name, $this->config, $this->driverLocator, $this->channelNameEncoder);
+                return new PublicChannel($signature, $this->config, $this->driverLocator, $this->channelNameEncoder);
             }
         } else if (!in_array($type, ChannelType::getAll())) {
             throw new \Exception("Invalid channel type [{$type}].");
@@ -76,12 +76,12 @@ class ChannelFactory implements ChannelFactoryInterface
 
         switch ($type) {
             case ChannelType::PRESENCE:
-                return new PresenceChannel($name, $this->config, $this->driverLocator, $this->channelNameEncoder);
+                return new PresenceChannel($signature, $this->config, $this->driverLocator, $this->channelNameEncoder);
             case ChannelType::PRIVATE:
-                return new PrivateChannel($name, $this->config, $this->driverLocator, $this->channelNameEncoder);
+                return new PrivateChannel($signature, $this->config, $this->driverLocator, $this->channelNameEncoder);
             case ChannelType::PUBLIC:
             default:
-                return new PublicChannel($name, $this->config, $this->driverLocator, $this->channelNameEncoder);
+                return new PublicChannel($signature, $this->config, $this->driverLocator, $this->channelNameEncoder);
         }
     }
 }

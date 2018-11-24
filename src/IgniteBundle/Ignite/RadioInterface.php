@@ -15,12 +15,12 @@ interface RadioInterface
 {
 
     /**
-     * @param string $identifier
+     * @param string $name
      * @param array $parameters
      * @param string $type
      * @return ChannelInterface
      */
-    public function getChannel(string $identifier, $parameters = [], string $type = ""): ChannelInterface;
+    public function getChannel(string $name, $parameters = [], string $type = ""): ChannelInterface;
 
     /**
      * @return ChannelInterface[]

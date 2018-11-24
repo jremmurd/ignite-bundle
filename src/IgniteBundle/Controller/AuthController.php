@@ -27,26 +27,26 @@ class AuthController extends FrontendController
      * @param Request $request
      * @param Radio $radio
      * @param Config $config
-     * @param ChannelSignatureEncoderInterface $channelNameEncoder
+     * @param ChannelSignatureEncoderInterface $signatureEncoder
      * @return Response
      *
      * @throws \Exception
      * @Route("/ignite/auth/{driver}")
      */
-    public function authenticateAction(Request $request, Radio $radio, Config $config, ChannelSignatureEncoderInterface $channelNameEncoder)
+    public function authenticateAction(Request $request, Radio $radio, Config $config, ChannelSignatureEncoderInterface $signatureEncoder)
     {
-        $channelName = $request->get(Constant::POST_PARAM_CHANNEL_NAME);
+        $channelSignature = $request->get(Constant::POST_PARAM_CHANNEL_NAME);
 
         /* @var AbstractAuthChannel $channel */
-        $decodedChannelName = $channelNameEncoder->decode($channelName);
-        $channel = $radio->getChannel($decodedChannelName["identifier"], $decodedChannelName["parameters"]);
+        $decodedChannelName = $signatureEncoder->decode($channelSignature);
+        $channel = $radio->getChannel($decodedChannelName["name"], $decodedChannelName["parameters"]);
 
         if (!$channel instanceof AbstractAuthChannel) {
-            throw  new \Exception("Invalid channel instance [{$channelName}].");
+            throw  new \Exception("Invalid channel instance [{$channelSignature}].");
         }
 
-        $identifier = $channelNameEncoder->decode($channelName)["identifier"];
-        $channelConfig = $config->getChannelConfig($identifier);
+        $name = $signatureEncoder->decode($channelSignature)["name"];
+        $channelConfig = $config->getChannelConfig($name);
 
         $isAuthenticated = false;
 
@@ -61,7 +61,7 @@ class AuthController extends FrontendController
             $driverName = $request->get("driver");
             $presenceData = $channel->getAuthResponseData($authenticator->getUser());
 
-            $pusherDriver = $radio->getChannel($channelName)->getDriver($driverName);
+            $pusherDriver = $radio->getChannel($channelSignature)->getDriver($driverName);
             $successResponse = $pusherDriver->getAuthPresenceResponse($request, $isAuthenticated, $this->getUser()->getId(), $presenceData);
 
             return new Response((string)$successResponse);

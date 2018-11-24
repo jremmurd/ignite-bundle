@@ -32,45 +32,45 @@ class DefaultChannelSignatureEncoder implements ChannelSignatureEncoderInterface
     }
 
     /**
-     * @param $identifier
+     * @param $name
      * @param array $parameters
      * @param bool $excludePrefix
      * @param string $namespace
      * @return string
      * @throws \Exception
      */
-    public function encode($identifier, $parameters = [], $excludePrefix = false, $namespace = ""): string
+    public function encode($name, $parameters = [], $excludePrefix = false, $namespace = ""): string
     {
-        $prefix = $this->getChannelPrefix($identifier);
+        $prefix = $this->getChannelPrefix($name);
         $parameters = $parameters === null ? [] : $parameters;
 
-        $configParameters = $this->config->getChannelParameters($identifier);
+        $configParameters = $this->config->getChannelParameters($name);
         $strictParameters = $this->config->getChannelsConfigs()["strict_parameters"];
 
         if ($strictParameters && count($parameters) != count($configParameters)) {
-            throw new \Exception("Expected channel parameters " . json_encode($configParameters) . ", but got " . json_encode(array_keys($parameters)) . " for channel $identifier..");
+            throw new \Exception("Expected channel parameters " . json_encode($configParameters) . ", but got " . json_encode(array_keys($parameters)) . " for channel $name..");
         }
 
         if ($parameters) {
             foreach ($parameters as $parameter => $value) {
-                $this->validateChannelName($parameter);
+                $this->validateChannelSignature($parameter);
                 $parameterIsConfigured = in_array($parameter, $configParameters);
 
                 if ($strictParameters && !$parameterIsConfigured) {
-                    throw new \Exception("Expected channel parameters " . json_encode($configParameters) . ", but got " . json_encode(array_keys($parameters)) . " for channel $identifier.");
+                    throw new \Exception("Expected channel parameters " . json_encode($configParameters) . ", but got " . json_encode(array_keys($parameters)) . " for channel $name.");
                 }
             }
         }
 
-        $name = !empty($parameters)
-            ? ($identifier . "__" . implode("_", $parameters))
-            : $identifier;
+        $signature = !empty($parameters)
+            ? ($name . "__" . implode("_", $parameters))
+            : $name;
 
         $namespace = $namespace ?: $this->config->getCurrentChannelNamespaceName();
 
         return $excludePrefix
-            ? ($namespace . self::NAMESPACE_DELIMITER . $name)
-            : ($prefix . $namespace . self::NAMESPACE_DELIMITER . $name);
+            ? ($namespace . self::NAMESPACE_DELIMITER . $signature)
+            : ($prefix . $namespace . self::NAMESPACE_DELIMITER . $signature);
     }
 
     /**
@@ -95,12 +95,12 @@ class DefaultChannelSignatureEncoder implements ChannelSignatureEncoderInterface
         $data["prefix"] = $prefix;
         $data["namespace"] = $namespace;
 
-        $identifierAndParameters = explode("__", $parts[1]);
-        $identifier = $identifierAndParameters[0];
-        $data["identifier"] = $identifier;
+        $nameAndParameters = explode("__", $parts[1]);
+        $name = $nameAndParameters[0];
+        $data["name"] = $name;
 
-        if ($identifierAndParameters[1] && ($parameters = $this->config->getChannelConfig($identifier)["parameters"])) {
-            $parameterValues = explode("_", $identifierAndParameters[1]);
+        if ($nameAndParameters[1] && ($parameters = $this->config->getChannelConfig($name)["parameters"])) {
+            $parameterValues = explode("_", $nameAndParameters[1]);
 
             foreach ($parameters as $index => $parameter) {
                 if (!$parameterValues[$index]) {
@@ -114,17 +114,17 @@ class DefaultChannelSignatureEncoder implements ChannelSignatureEncoderInterface
     }
 
     /**
-     * @param $identifier
+     * @param $name
      * @return null|string
      * @throws \Exception
      */
-    protected function getChannelPrefix($identifier): ?string
+    protected function getChannelPrefix($name): ?string
     {
         $prefix = "";
 
-        if ($this->config->isPrivateChannel($identifier)) {
+        if ($this->config->isPrivateChannel($name)) {
             $prefix = ChannelType::getPrefix(ChannelType::PRIVATE);
-        } elseif ($this->config->isPresenceChannel($identifier)) {
+        } elseif ($this->config->isPresenceChannel($name)) {
             $prefix = ChannelType::getPrefix(ChannelType::PRESENCE);
         }
 
@@ -135,7 +135,7 @@ class DefaultChannelSignatureEncoder implements ChannelSignatureEncoderInterface
      * @param string $text
      * @throws \Exception
      */
-    public function validateChannelName(string $text)
+    public function validateChannelSignature(string $text)
     {
         $regexInner = "\$_a-zA-z0-9.";
         $regex = "[^$regexInner]";

@@ -89,10 +89,10 @@ class Pusher extends AbstractScriptDriver
     protected function getJsChannelVar(string $channelName)
     {
         $decodedChannelName = $this->channelNameEncoder->decode($channelName);
-        $useSlug = $this->config->getChannelConfig($decodedChannelName["identifier"])["useSlugForJS"];
+        $useSlug = $this->config->getChannelConfig($decodedChannelName["name"])["use_slug_for_js"];
 
         if (!$useSlug) {
-            $channelName = $decodedChannelName["identifier"];
+            $channelName = $decodedChannelName["name"];
         }
 
         $channelName = str_replace(".", "$$", $channelName);
@@ -111,7 +111,7 @@ class Pusher extends AbstractScriptDriver
 
         $driverConfig = $this->getDriverConfig();
 
-        $authEndpoint = $this->config->getCurrentChannelNamespace()["authEndpoint"];
+        $authEndpoint = $this->config->getCurrentChannelNamespace()["auth_endpoint"];
         $authEndpoint = preg_replace("/{driver}/", $this->getName(), $authEndpoint);
 
         $config = array_merge([

@@ -11,6 +11,13 @@ namespace JRemmurd\IgniteBundle\Ignite\Channel;
 
 interface ChannelFactoryInterface
 {
-    public function createByConfig(string $identifier = "", string $name = "", $parameters = [], string $type = ""): ?ChannelInterface;
+    /**
+     * @param string $name
+     * @param string $signature
+     * @param array $parameters
+     * @param string $type
+     * @return ChannelInterface|null
+     */
+    public function createByConfig(string $name = "", string $signature = "", $parameters = [], string $type = ""): ?ChannelInterface;
 
 }
