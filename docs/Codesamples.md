@@ -54,7 +54,7 @@
 
         $notifiedChannel
             ->publish(new Notification("Some Event", "Hello World!", NotificationType::INFO ))
-            ->publish(new Notification("Some Title", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO ,  [
+            ->publish(new Notification("Some Title", "Lorem ipsum dolor sit amet.", NotificationType::INFO ,  [
                     "related_object" => ["type" => Notification::DATA_TYPE_OBJECT, "data" => 2]
                 ])
             );
@@ -71,7 +71,7 @@
         
         $notifications->addConditionParam("`read` IS NULL");
         $notifications->addConditionParam("`targetUser` = ?", $this->getUser()->getId());
-        $notifications->setLimit(5);
+        $notifications->setLimit(25);
         $notifications->setOrderKey("creationDate");
         $notifications->setOrder("desc");
         
