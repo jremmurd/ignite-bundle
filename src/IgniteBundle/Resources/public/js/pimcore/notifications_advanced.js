@@ -29,6 +29,8 @@ IgniteAdmin.Notifications = (function () {
         }
     });
 
+    var windowToggler = false;
+
     var notificationWidget = Ext.create('Ext.window.Window', {
         title: "Notifications",
         height: defaultWidgetHeight,
@@ -43,7 +45,7 @@ IgniteAdmin.Notifications = (function () {
         hideCollapseTool: true,
         titleCollapse: true,
         // alwaysOnTop: true,
-        collapsed: false,
+        collapsed: true,
         layout: 'fit',
 
         tools: [
@@ -70,20 +72,20 @@ IgniteAdmin.Notifications = (function () {
                 type: 'maximize',
                 tooltip: 'Maximize',
                 handler: function (event, toolEl, panelHeader) {
-                    notificationWidget.setWidth(800);
-                    notificationWidget.setHeight(800);
-                    notificationWidget.setX(defaultWidgetPositionX(), false);
-                    notificationWidget.setY(defaultWidgetPositionY, false);
-                }
-            },
-            {
-                type: 'minimize',
-                tooltip: 'Minimize',
-                handler: function (event, toolEl, panelHeader) {
-                    notificationWidget.setWidth(defaultWidgetWidth);
-                    notificationWidget.setHeight(defaultWidgetHeight);
-                    notificationWidget.setX(defaultWidgetPositionX(), false);
-                    notificationWidget.setY(defaultWidgetPositionY, false);
+                    if (!windowToggler) {
+                        windowToggler = true;
+                        notificationWidget.setWidth(600);
+                        notificationWidget.setHeight(800);
+                        notificationWidget.setX(defaultWidgetPositionX(), false);
+                        notificationWidget.setY(defaultWidgetPositionY, false);
+                    } else {
+                        windowToggler = false;
+                        notificationWidget.setWidth(defaultWidgetWidth);
+                        notificationWidget.setHeight(defaultWidgetHeight);
+
+                        notificationWidget.setX(defaultWidgetPositionX(), false);
+                        notificationWidget.setY(defaultWidgetPositionY, false);
+                    }
                 }
             }
         ],
