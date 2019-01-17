@@ -9,8 +9,10 @@
 namespace JRemmurd\IgniteBundle\Ignite\Event;
 
 use Carbon\Carbon;
+use JRemmurd\IgniteBundle\Constant\NotificationType;
 use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
 use JRemmurd\IgniteBundle\Ignite\Driver\DriverInterface;
+use Pimcore\Model\Element\ElementInterface;
 
 /**
  * Class NotificationEvent
@@ -31,9 +33,6 @@ class Notification implements EventInterface
 
     /* @var array $data */
     protected $data = [];
-
-    /* @var array $notificationData */
-    protected $notificationData = [];
 
     /* @var Carbon $createdAt */
     protected $createdAt;
@@ -59,16 +58,19 @@ class Notification implements EventInterface
     /* @var string $channelName */
     protected $channelName;
 
+    /* @var ElementInterface $element */
+    protected $element;
+
     /**
      * NotificationEvent constructor.
      * @param string $title
      * @param string $message
      * @param string $type
      * @param int $targetUser
-     * @param array $data
+     * @param ElementInterface|null $element
      * @param int $sourceUser
      */
-    public function __construct(string $title, string $message, string $type, array $data = [], int $targetUser = null, int $sourceUser = null)
+    public function __construct(string $title, string $message, ElementInterface $element = null, string $type = "", $targetUser = null, $sourceUser = null)
     {
         $this->name = "notification";
 
@@ -76,30 +78,9 @@ class Notification implements EventInterface
         $this->targetUser = $targetUser;
         $this->title = $title;
         $this->message = $message;
-        $this->type = $type;
+        $this->type = $type ?: NotificationType::INFO;
         $this->createdAt = Carbon::now();
-        $this->notificationData = $data;
-
-        if ($channelName = $this->getChannelName()) {
-            $this->addNotificationData("channelName", Notification::DATA_TYPE_TEXT, $channelName);
-        }
-    }
-
-    /**
-     * @param string $name
-     * @param string $type
-     * @param mixed $data
-     */
-    public function addNotificationData($name, $type, $data)
-    {
-        $this->notificationData[$name] = [
-            'type' => $type,
-            'data' => $data
-        ];
-
-        if ($this->notification) {
-            $this->notification->addData($name, $type, $data);
-        }
+        $this->element = $element;
     }
 
     /**
@@ -124,14 +105,12 @@ class Notification implements EventInterface
             "type" => $this->getType(),
             "targetUser" => $this->getTargetUser(),
             "sourceUser" => $this->getSourceUser(),
-            "notificationData" => $this->getNotificationData(),
             "creationDate" => $this->getCreatedAt()->timestamp,
+            "elementId" => $this->getElement() ? $this->getElement()->getId() : "",
+            "elementType" => $this->getElement() ? $this->getElement()->getType() : "",
+            "notificationId" => $this->getNotification() ? $this->getNotification()->getId() : "",
+            "modificationDate" => $this->getNotification() ? (string)$this->getNotification()->getModificationDate() : ""
         ];
-
-        if ($notification = $this->getNotification()) {
-            $this->data["notification_id"] = $notification->getId();
-            $this->data["modificationDate"] = (string)$notification->getModificationDate();
-        }
 
         return $this->data;
     }
@@ -150,14 +129,6 @@ class Notification implements EventInterface
     public function getNotification(): ?\JRemmurd\IgniteBundle\Model\Notification
     {
         return $this->notification;
-    }
-
-    /**
-     * @return array
-     */
-    public function getNotificationData(): array
-    {
-        return $this->notificationData;
     }
 
     /**
@@ -241,4 +212,24 @@ class Notification implements EventInterface
         $this->targetUser = (int)$targetUser;
         return $this;
     }
+
+    /**
+     * @return ElementInterface
+     */
+    public function getElement(): ?ElementInterface
+    {
+        return $this->element;
+    }
+
+    /**
+     * @param ElementInterface $element
+     * @return Notification
+     */
+    public function setElement(ElementInterface $element)
+    {
+        $this->element = $element;
+        return $this;
+    }
+
+
 }

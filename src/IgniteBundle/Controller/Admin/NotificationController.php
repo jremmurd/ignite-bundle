@@ -12,6 +12,7 @@ namespace JRemmurd\IgniteBundle\Controller\Admin;
 use JRemmurd\IgniteBundle\Ignite\Radio;
 use JRemmurd\IgniteBundle\Model\Notification;
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
+use Pimcore\Model\Element\ElementInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,15 +47,21 @@ class NotificationController extends AdminController
         $json = [];
 
         foreach ($notifications as $notification) {
-            $json[] = [
+            $data = [
                 "targetUser" => $notification->getTargetUser(),
                 "sourceUser" => $notification->getSourceUser(),
-                "notification_id" => $notification->getId(),
+                "notificationId" => $notification->getId(),
                 "title" => $notification->getTitle(),
                 "message" => $notification->getMessage(),
-                "notificationData" => $notification->getData(),
                 "creationDate" => $notification->getCreationDate()->timestamp
             ];
+
+            if ($element = $notification->getElement()) {
+                /* @var ElementInterface $element */
+                $data["elementType"] = $element->getType();
+                $data["elementId"] = $element->getId();
+            }
+            $json[] = $data;
         }
 
         return new JsonResponse($json);

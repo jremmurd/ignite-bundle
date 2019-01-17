@@ -12,6 +12,7 @@ use JRemmurd\IgniteBundle\Constant\Permission;
 use JRemmurd\IgniteBundle\Model\Notification;
 use Pimcore\Db;
 use Pimcore\Model\User\Permission\Definition;
+use Symfony\Component\Process\Process;
 
 class Installer extends \Pimcore\Extension\Bundle\Installer\AbstractInstaller
 {
@@ -55,7 +56,7 @@ class Installer extends \Pimcore\Extension\Bundle\Installer\AbstractInstaller
     public function install()
     {
         $this->installPermissions();
-//        $this->installTranslations();
+        $this->installTranslations();
 
         copy(dirname(__FILE__) . "/../Install/ignite.yml", PIMCORE_APP_ROOT . "/config/ignite.example.yml");
 
@@ -74,6 +75,9 @@ CREATE TABLE `{$notificationTable}` (
   `read` int(1) DEFAULT NULL,
   `sourceUser` int(11) DEFAULT NULL,
   `targetUser` int(11) DEFAULT NULL,
+  `elementId` int(11) DEFAULT NULL,
+  `elementType` varchar(255) DEFAULT NULL,
+  `channelName` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `message` longtext,
   PRIMARY KEY (`id`),
@@ -84,14 +88,6 @@ CREATE TABLE `{$notificationTable}` (
 ) DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `{$notificationDataTable}`;
-
-CREATE TABLE `{$notificationDataTable}` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
-  `type` enum('text','date','document','asset','object','bool') DEFAULT NULL,
-  `data` text,
-  KEY `id` (`id`)
-) DEFAULT CHARSET=utf8mb4;
 SQL;
 
         $db->exec($createStatement);
@@ -122,6 +118,13 @@ DROP TABLE IF EXISTS `{$notificationTable}`;"
     public function needsReloadAfterInstall()
     {
         return true;
+    }
+
+    protected function installTranslations(){
+        $de = new Process([PIMCORE_APP_ROOT . '/bin/console translation:update de IgniteBundle --dump-messages']);
+        $de->run();
+        $en = new Process([PIMCORE_APP_ROOT . '/bin/console translation:update en IgniteBundle --dump-messages']);
+        $en->run();
     }
 
     /**

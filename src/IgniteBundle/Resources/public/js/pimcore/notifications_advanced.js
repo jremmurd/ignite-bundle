@@ -3,7 +3,7 @@ var IgniteAdmin = IgniteAdmin || {};
 IgniteAdmin.Notifications = (function () {
 
     var defaultWidgetHeight = 320;
-    var defaultWidgetWidth = 280;
+    var defaultWidgetWidth = 400;
 
     var defaultWidgetPositionY = 34;
     var defaultWidgetPositionX = function () {
@@ -30,6 +30,52 @@ IgniteAdmin.Notifications = (function () {
     });
 
     var windowToggler = false;
+
+    var columns = [
+        {text: t("content"), sortable: true, hidden: false, dataIndex: '_content', filter: 'string', flex: 250},
+        {text: t("title"), sortable: true, hidden: true, dataIndex: 'title', filter: 'string', flex: 90},
+        {text: t("message"), sortable: true, hidden: true, dataIndex: 'message', filter: 'string'},
+        {text: t("user"), sortable: true, hidden: true, dataIndex: 'targetUser', flex: 100, filter: 'string',
+            renderer: function (v) {
+                return v;
+            }
+        },
+        {text: t("date"), sortable: true, hidden: true, name: 'date', dataIndex: 'date', flex: 100, filter: 'date', renderer: GridRenderer.date},
+        {
+            xtype: 'actioncolumn',
+            menuText: t('click_to_open'),
+            width: 38,
+            id: "notification_open",
+            dataIndex: 'elementId',
+            items: [{
+                tooltip: t('click_to_open'),
+                iconCls: "pimcore_icon_open",
+                getClass: function(v, meta, rec){
+                    if (!v) {
+                        return "force-hidden";
+                    }
+                    return "pimcore_icon_open";
+                },
+                handler: function (grid, rowIndex, event) {
+                    var record = notificationsStore.getAt(rowIndex),
+                        id = record.data.elementId,
+                        type = record.data.elementType;
+                    pimcore.helpers.openElement(id, type, null);
+                }.bind(this)
+            }]
+        },
+        {
+            xtype: 'actioncolumn',
+            menuText: t('click_to_set_read'),
+            width: 38,
+            items: [{
+                tooltip: t('click_to_set_read'),
+                iconCls: "pimcore_icon_apply",
+                handler: function (grid, rowIndex, event) {
+                    notificationsStore.removeAt(rowIndex);
+                }.bind(this)
+            }],
+        }];
 
     var notificationWidget = Ext.create('Ext.window.Window', {
         title: "Notifications",
@@ -94,7 +140,7 @@ IgniteAdmin.Notifications = (function () {
             border: false,
             listeners: {
                 cellclick: function (view, td, colIndex, record, tr, rowIndex) {
-                    notificationsStore.removeAt(rowIndex);
+                    // notificationsStore.removeAt(rowIndex);
                 }
             },
             viewConfig: {
@@ -102,42 +148,7 @@ IgniteAdmin.Notifications = (function () {
                     return "multiline-row";
                 }
             },
-            columns: [
-                {text: t("Content"), sortable: true, hidden: false, dataIndex: 'content', filter: 'string', flex: 250},
-                {text: t("title"), sortable: true, hidden: true, dataIndex: 'title', filter: 'string', flex: 90},
-                {text: t("message"), sortable: true, hidden: true, dataIndex: 'message', filter: 'string'},
-                {
-                    text: t("element"), sortable: false, dataIndex: 'cpath', flex: 200, hidden: true,
-                    renderer: function (value, metaData, record, rowIndex, colIndex, store) {
-                        // TODO
-                        // if (record.get("cid")) {
-                        //     return t(record.get("ctype")) + ": " + record.get("cpath");
-                        // }
-                        // return "";
-                    }
-                },
-                {
-                    text: t("user"), sortable: true, hidden: true, dataIndex: 'user', flex: 100, filter: 'string',
-                    renderer: function (v) {
-                        // TODO
-                        return v;
-                        // if (v && v["name"]) {
-                        //     return v["name"];
-                        // }
-                        // return "";
-                    }
-                },
-                {
-                    text: t("date"),
-                    sortable: true,
-                    hidden: true,
-                    name: 'date',
-                    dataIndex: 'date',
-                    flex: 100,
-                    filter: 'date',
-                    renderer: GridRenderer.date
-                }
-            ],
+            columns: columns,
             store: notificationsStore,
             whiteSpace: 'normal'
         }
@@ -204,7 +215,7 @@ IgniteAdmin.Notifications = (function () {
             url: '/admin/ignite/notification/set-read',
             params: {
                 csrf: pimcore.settings['csrfToken'],
-                id: record.data.notification_id
+                id: record.data.notificationId
             },
             failure: function () {
                 updateUnreadCount(true);
@@ -213,14 +224,8 @@ IgniteAdmin.Notifications = (function () {
     };
 
     var addNotification = function (record) {
-        notificationsStore.add({
-            content: "<strong>" + record.title + "</strong><br>" + record.message + "<br><small style='float:right'>" + GridRenderer.date(record.creationDate) + "</small>",
-            message: record.message,
-            title: record.title,
-            date: record.creationDate,
-            notification_id: record.notification_id,
-        });
-
+        record._content = "<strong>" + record.title + "</strong><br>" + record.message + "<br><small style='float:right'>" + GridRenderer.date(record.creationDate) + "</small>";
+        notificationsStore.add(record);
         notificationsStore.sort('date', 'DESC');
         updateUnreadCount(true);
     };

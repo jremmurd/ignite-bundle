@@ -255,9 +255,11 @@ class Radio implements RadioInterface
 
     /**
      * @param string $channelNamespace
+     * @return Radio
      */
     public function setChannelNamespace($channelNamespace)
     {
         $this->channelNamespace = $channelNamespace;
+        return $this;
     }
 }

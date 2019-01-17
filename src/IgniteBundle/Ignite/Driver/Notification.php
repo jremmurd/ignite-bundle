@@ -19,6 +19,7 @@ class Notification extends AbstractDriver
     /* @var \JRemmurd\IgniteBundle\Model\Notification[] $notifications */
     protected $notifications = [];
 
+    /* @var ChannelSignatureEncoderInterface $channelSignatureEncoder */
     protected $channelSignatureEncoder;
 
     /**
@@ -43,36 +44,41 @@ class Notification extends AbstractDriver
      * @param $channels
      * @param EventInterface $event
      * @param null $socketId
-     * @return \JRemmurd\IgniteBundle\Model\Notification
+     * @return void
      */
     public function push($channels, EventInterface $event, $socketId = null)
     {
-        $notification = \JRemmurd\IgniteBundle\Model\Notification::createFromEvent($event);
-        $this->notifications[] = $notification;
+        $channels = is_array($channels) ? $channels : [$channels];
 
-        if (method_exists($event, "setNotification")) {
-            /* @var \JRemmurd\IgniteBundle\Ignite\Event\Notification $event */
-            $event->setNotification($notification);
-        }
+        foreach ($channels as $channel) {
+            if (method_exists($event, "setChannelName")) {
+                $event->setChannelName($channel);
+            }
 
-        if (method_exists($event, "setTargetUser")) {
+            $notification = \JRemmurd\IgniteBundle\Model\Notification::createFromEvent($event);
+            $this->notifications[] = $notification;
 
-            if (!$event->getTargetUser()) {
+            if (method_exists($event, "setNotification")) {
+                $event->setNotification($notification);
+            }
+
+            $notification->setChannelName($channel);
+
+            if (method_exists($event, "getTargetUser")) {
+                if ($event->getTargetUser()) {
+                    continue;
+                }
+
                 /* @var \JRemmurd\IgniteBundle\Ignite\Event\Notification $event */
-                $channels = is_array($channels) ? $channels : [$channels];
-                foreach ($channels as $channel) {
-                    $decoded = $this->channelSignatureEncoder->decode($channel);
-                    if ($targetUserId = @$decoded["parameters"]["id"]) {
-                        $notification->setTargetUser($targetUserId);
-                        $event->setTargetUser($targetUserId);
-                    }
+                $decoded = $this->channelSignatureEncoder->decode($channel);
+                if ($targetUserId = @$decoded["parameters"]["id"]) {
+                    $notification->setTargetUser($targetUserId);
+                    $event->setTargetUser($targetUserId);
                 }
             }
+
+            $notification->save();
         }
-
-        $notification->save();
-
-        return $notification;
     }
 
     /**

@@ -9,12 +9,12 @@
 namespace JRemmurd\IgniteBundle\Controller;
 
 
-use JRemmurd\IgniteBundle\Constant\NotificationType;
 use JRemmurd\IgniteBundle\Ignite\Channel\Message;
 use JRemmurd\IgniteBundle\Ignite\Event\Notification;
 use JRemmurd\IgniteBundle\Ignite\Radio;
 use JRemmurd\IgniteBundle\Model\Notification\Listing;
 use Pimcore\Controller\FrontendController;
+use Pimcore\Model\DataObject\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -114,16 +114,15 @@ class ExampleController extends FrontendController
     public function publishToNotificationChannel(Request $request, Radio $radio)
     {
         $radio->setChannelNamespace("admin");
-        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 99999999]);
+        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 2]);
 
+        $element = User::getById(2);
         $notifiedChannel
-            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!", NotificationType::WARNING))
-            ->publish(new Notification("Hello Notification with data", "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.", NotificationType::INFO, [
-                    "related_object" => [
-                        "type" => Notification::DATA_TYPE_OBJECT,
-                        "data" => 99999999
-                    ]
-                ])
+            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!"))
+            ->publish(new Notification(
+                    "Hello Notification with data",
+                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.",
+                    $element)
             );
 
         return new Response("Published to channel with signature {$notifiedChannel->getSignature()}.");

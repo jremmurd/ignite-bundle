@@ -15,7 +15,9 @@ use JRemmurd\IgniteBundle\Ignite\Channel\EventInterface;
 use JRemmurd\IgniteBundle\Model\Notification\Dao;
 use Pimcore\Event\Model\ElementEvent;
 use Pimcore\Model\AbstractModel;
+use Pimcore\Model\DataObject\Concrete;
 use Pimcore\Tool\Authentication;
+use Pimcore\Model\Element\ElementInterface;
 
 /**
  * Class Notification
@@ -37,9 +39,6 @@ class Notification extends AbstractModel
     /** @var string */
     public $message = '';
 
-    /** @var array */
-    public $data = [];
-
     /** @var null|int */
     public $sourceUser;
 
@@ -55,27 +54,39 @@ class Notification extends AbstractModel
     /** @var int */
     public $modificationDate;
 
+    /* @var string $elementId */
+    public $elementId;
+
+    /* @var string $elementType */
+    public $elementType;
+
+    /* @var string $channelName */
+    public $channelName;
+
     /**
      * Notification constructor.
      * @param string $type
      * @param string $title
      * @param string $message
-     * @param int $targetUser
-     * @param array $data
-     * @param int $sourceUser
-     * @param int|null $creationDate
+     * @param string $channelName
+     * @param $targetUserId
+     * @param ElementInterface|null $element
+     * @param $sourceUserId
      */
-    public function setNotificationData(string $type, string $title, string $message, int $targetUser = null, array $data = [], int $sourceUser = null, int $creationDate = null)
+    public function setNotificationData(string $type, string $title, string $message, string $channelName, ElementInterface $element = null, $targetUserId = null, $sourceUserId = null)
     {
         $this->type = $type;
         $this->title = $title;
         $this->message = $message;
-        $this->data = $data;
-        $this->sourceUser = $sourceUser;
-        $this->targetUser = $targetUser;
-        $this->creationDate = $creationDate ?: Carbon::now()->timestamp;
-        $this->modificationDate = Carbon::now()->timestamp;
+        $this->channelName = $channelName;
+        $this->sourceUser = $sourceUserId;
+        $this->targetUser = $targetUserId;
+        $this->creationDate = Carbon::now()->timestamp;
         $this->read = null;
+
+        if ($element) {
+            $this->setElement($element);
+        }
     }
 
     /**
@@ -86,15 +97,34 @@ class Notification extends AbstractModel
     {
         /* @var \JRemmurd\IgniteBundle\Ignite\Event\Notification $event */
         $record = new self();
-        $record->setNotificationData($event->getType(), $event->getTitle(), $event->getMessage(), $event->getTargetUser(), $event->getNotificationData(), $event->getSourceUser(), $event->getCreatedAt()->timestamp);
+        $record->setNotificationData($event->getType(), $event->getTitle(), $event->getMessage(), $event->getChannelName(), $event->getElement(), $event->getTargetUser(),  $event->getSourceUser());
         return $record;
     }
 
+    /**
+     * @return ElementInterface
+     */
+    public function getElement()
+    {
+        return Concrete::getById($this->getElementId());
+    }
+
+    /**
+     * @param ElementInterface $element
+     * @return $this
+     */
+    public function setElement(ElementInterface $element)
+    {
+        $this->elementType = $element->getType();
+        $this->elementId = $element->getId();
+        return $this;
+    }
 
     /**
      * @param int $id
      *
      * @return Notification|null
+     * @throws \Doctrine\DBAL\DBALException
      */
     public static function getById($id)
     {
@@ -114,24 +144,12 @@ class Notification extends AbstractModel
     }
 
     /**
-     * @param string $name
-     * @param string $type
-     * @param mixed $data
-     */
-    public function addData($name, $type, $data)
-    {
-        $this->data[$name] = [
-            'type' => $type,
-            'data' => $data
-        ];
-    }
-
-    /**
      * @return $this
      */
     public static function create()
     {
         $notification = new self();
+        $notification->setCreationDate(Carbon::now()->timestamp);
         $notification->save();
         return $notification;
     }
@@ -157,7 +175,7 @@ class Notification extends AbstractModel
     }
 
     /**
-     * @return mixed|void
+     * @return mixed|null
      */
     protected function getFrontendUser()
     {
@@ -166,11 +184,11 @@ class Notification extends AbstractModel
         }
 
         if (null === $token = \Pimcore::getContainer()->get('security.token_storage')->getToken()) {
-            return;
+            return null;
         }
 
         if (!is_object($user = $token->getUser())) {
-            return;
+            return null;
         }
 
         return $user;
@@ -224,8 +242,7 @@ class Notification extends AbstractModel
 
     /**
      * @param int $id
-     *
-     * @return $this
+     * @return Notification
      */
     public function setId($id)
     {
@@ -243,8 +260,7 @@ class Notification extends AbstractModel
 
     /**
      * @param string $type
-     *
-     * @return $this
+     * @return Notification
      */
     public function setType($type)
     {
@@ -262,8 +278,7 @@ class Notification extends AbstractModel
 
     /**
      * @param string $title
-     *
-     * @return $this
+     * @return Notification
      */
     public function setTitle($title)
     {
@@ -281,8 +296,7 @@ class Notification extends AbstractModel
 
     /**
      * @param string $message
-     *
-     * @return $this
+     * @return Notification
      */
     public function setMessage($message)
     {
@@ -300,8 +314,7 @@ class Notification extends AbstractModel
 
     /**
      * @param int|null $sourceUser
-     *
-     * @return $this
+     * @return Notification
      */
     public function setSourceUser($sourceUser)
     {
@@ -319,8 +332,7 @@ class Notification extends AbstractModel
 
     /**
      * @param int $targetUser
-     *
-     * @return $this
+     * @return Notification
      */
     public function setTargetUser($targetUser)
     {
@@ -346,12 +358,47 @@ class Notification extends AbstractModel
 
     /**
      * @param boolean $read
-     *
-     * @return $this
+     * @return Notification
      */
     public function setRead($read)
     {
         $this->read = $read;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getElementId()
+    {
+        return $this->elementId;
+    }
+
+    /**
+     * @param string $elementId
+     * @return Notification
+     */
+    public function setElementId($elementId)
+    {
+        $this->elementId = $elementId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getElementType(): string
+    {
+        return $this->elementType;
+    }
+
+    /**
+     * @param string $elementType
+     * @return Notification
+     */
+    public function setElementType($elementType)
+    {
+        $this->elementType = $elementType;
         return $this;
     }
 
@@ -365,8 +412,7 @@ class Notification extends AbstractModel
 
     /**
      * @param int|Carbon $creationDate
-     *
-     * @return $this
+     * @return Notification
      */
     public function setCreationDate($creationDate)
     {
@@ -388,8 +434,7 @@ class Notification extends AbstractModel
 
     /**
      * @param int|Carbon $modificationDate
-     *
-     * @return $this
+     * @return Notification
      */
     public function setModificationDate($modificationDate)
     {
@@ -402,23 +447,21 @@ class Notification extends AbstractModel
     }
 
     /**
-     * @param $data
-     *
-     * @return $this
+     * @return string
      */
-    public function setData($data)
+    public function getChannelName(): string
     {
-        $this->data = $data;
-
-        return $this;
+        return $this->channelName;
     }
 
     /**
-     * @return array
+     * @param string $channelName
+     * @return Notification
      */
-    public function getData()
+    public function setChannelName(string $channelName)
     {
-        return $this->data;
+        $this->channelName = $channelName;
+        return $this;
     }
 
 }
