@@ -48,4 +48,4 @@ The widget can be collapsed, repositioned via draggging and resized.
 By clicking a notification item it gets marked as `read` and is removed from the list.
 
 In the lower left corner there is the user persence icon, which shows which users are online by hovering or clicking on the user icon.
-![Screenshot](./docs/img/screen_1.PNG "Online Users and Notifications")
+![Screenshot](./docs/img/screen.PNG "Online Users and Notifications")
