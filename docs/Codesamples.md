@@ -50,16 +50,15 @@
      public function publishNotifications(Request $request, Radio $radio)
     {
         $radio->setChannelNamespace("admin");
-        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 3]);
+        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 9999]);
 
+        $element = \Pimcore\Model\DataObject\MyEntity::getById(12345);
         $notifiedChannel
-            ->publish(new Notification("Some Event", "Hello World!", NotificationType::INFO ))
-            ->publish(new Notification("Some Title", "Lorem ipsum dolor sit amet.", NotificationType::INFO ,  [
-                    "related_object" => ["type" => Notification::DATA_TYPE_OBJECT, "data" => 2]
-                ])
-            );
-
-        return new Response("Done.");
+            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!"))
+            ->publish(new Notification(
+                    "Hello Notification with data",
+                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.",
+                    $element)
     }
 ```
 
