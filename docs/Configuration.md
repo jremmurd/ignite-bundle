@@ -59,7 +59,7 @@ ignite:
             - name: notifications
               drivers: [pusher, notifications]                
           
-          presence:                                           # max 100 users (Pusher driver only)
+          presence:                                           # max 100 users for Pusher driver 
             - name: user
               use_slug_for_js: false                          # whether the parameters should be included in the js channel variable names: 'user' vs. 'user_12345'
               parameters:                                     
