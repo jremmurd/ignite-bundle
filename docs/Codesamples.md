@@ -1,9 +1,8 @@
 # Code Samples
 
-## Server Side
+## Server
 
 ### Subscribing to channels
-##### SomeController.php
 ```php
     public function indexAction(Request $request, Radio $radio)
     {
@@ -25,16 +24,15 @@
 ```
 
 ### Publishing events
-##### SomeController.php
 ```php
     public function publishToPublicChannel(Request $request, Radio $radio)
     {
         $global = $radio->getPublicChannel("global");
-        $child_1 = $radio->getPublicChannel("global.child_1");    // the dot is used as separation symbol for channel inheritence
+        $child_1 = $radio->getPublicChannel("global.child_1");    // the dot indicates channel inheritence
         $child_1 = $radio->getPublicChannel("global.child_2");
 
-        $child_1->publish(new Message("Hello Child Channel 1!")); // event is published to 'global' and 'global.child_1'
-        $child_2->publish(new Message("Hello Child Channel 2!")); // event is published to 'global' and 'global.child_2'
+        $child_1->publish(new Message("Hello Child Channel 1!")); // published to 'global' and 'global.child_1'
+        $child_2->publish(new Message("Hello Child Channel 2!")); // published to 'global' and 'global.child_2'
 
         return new Response("Done.");
     }
@@ -50,20 +48,16 @@
      public function publishNotifications(Request $request, Radio $radio)
     {
         $radio->setChannelNamespace("admin");
-        $notifiedChannel = $radio->getPrivateChannel("user_notifications", ["id" => 9999]);
+        $notificationChannel = $radio->getPrivateChannel("user_notifications", ["id" => 9999]);
 
         $element = \Pimcore\Model\DataObject\MyEntity::getById(12345);
-        $notifiedChannel
-            ->publish(new Notification("Hello Notification", "Lorem ipsum dolor sit amet!"))
-            ->publish(new Notification(
-                    "Hello Notification with data",
-                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.",
-                    $element)
+        $notificationChannel
+            ->publish(new Notification("Yeay!", "Lorem ipsum dolor sit amet!"))
+            ->publish(new Notification("Wow!", "Lorem ipsum dolor sit amet!", $element)
     }
 ```
 
 ### Fetching unread notifications
-##### SomeController.php
 ```php
     public function notificationsAction(Request $request){
         $notifications = new Listing();
@@ -78,9 +72,9 @@
     }
 ```
 
-## Client Side
+## Client
 For details concerning the client side javascript have a look at the [pusher client api guide](https://pusher.com/docs/client_api_guide).
-If you use `$myChannel->subscribe()` on the server-side as described the initialization and subscriptions take place automatically.
+If you use `$myChannel->subscribe()` on the server-side as described the initialization and subscriptions take place automatically as long as you use the `ignite` template helper as described below.
 
 
 ##### index.html.php
@@ -88,7 +82,7 @@ If you use `$myChannel->subscribe()` on the server-side as described the initial
 <script>
     var Ignite = Ignite || {};
     
-    /* generated script for establishing the connection and all subscriptions/unsubscriptions */
+    /* output the script for establishing websocket connection and subscriptions/unsubscriptions */
     <?= $this->ignite() ?>
 
     Ignite.channels.global.bind('message', function (data) {
